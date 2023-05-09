@@ -90,11 +90,10 @@ if (userLogin) {
     if (user.email != userLogin.email) {
       return;
     }
-    if (find_user.cart.length == 0) {
-      find_user.cart = [...cart];
-      // console.log(cart);
-      return;
-    }
+    // if (find_user.cart.length == 0) {
+    //   find_user.cart = [...cart];
+    //   // console.log(cart);
+    // }
     user.cart.forEach((product) => {
       cart.forEach((cartProduct) => {
         if (cartProduct.id == product.id) {
