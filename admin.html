@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Page</title>
+    <link rel="icon" href="images/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Yeseva+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="admin/css/reset.css" />
+    <link rel="stylesheet" href="admin/css//admin-mobile.css" />
+    <link
+      rel="stylesheet"
+      href="admin/css/admin-desktop.css"
+      media="screen and (min-width:992px)"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container-fluid">
+        <div class="row">
+          <aside class="col-lg-2 justify-content-start align-items-center">
+            <div class="logo-img">
+              <a href="index.html"> <img src="images/logo.png" alt="" /></a>
+            </div>
+            <h4 class="m-0">Trang Quản lý</h4>
+          </aside>
+          <div class="right-header col-lg-10">
+            <div class="toggle">
+              <button class="btn btn-none btn-toggle">
+                <i class="fa-solid fa-bars"></i>
+              </button>
+              <h5 class="m-0">Trang Quản lý</h5>
+            </div>
+            <div class="buttons-header">
+              <button class="btn btn-none btn-notice">
+                <i class="fa-regular fa-bell"></i>
+                <span class="notice-number">0</span>
+              </button>
+              <button class="btn btn-none btn-message">
+                <i class="fa-regular fa-message"></i>
+                <span class="message-number">0</span>
+              </button>
+              <button class="btn btn-none btn-avatar">
+                <img src="images/logo.png" alt="" />
+                <span class="admin-username position-static text-danger"></span>
+              </button>
+              <button
+                class="btn btn-none btn-logout text-danger"
+                onclick="logOutAdmin()"
+              >
+                <i class="fa-solid fa-right-to-bracket"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Phần main nội dung chính -->
+    <main>
+      <div class="container-fluid">
+        <div class="row">
+          <aside class="col-lg-2">
+            <ul class="list-main-menu">
+              <li class="menu-item" id="pages">
+                <a href="#">
+                  <div><img src="images/admin-menu-1.svg" alt="" /> Pages</div>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </a>
+                <ul class="sub-menu">
+                  <li class="sub-menu-item" id="login">
+                    <a href="#">Login</a>
+                  </li>
+                  <li class="sub-menu-item" id="register">
+                    <a href="#">Register</a>
+                  </li>
+                  <li class="sub-menu-item" id="page-404">
+                    <a href="#">Error 404</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="menu-item" id="admins">
+                <a href="#">
+                  <div><img src="images/admin-menu-2.svg" alt="" /> Admins</div>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </a>
+                <ul class="sub-menu">
+                  <li class="sub-menu-item" id="list-admins">
+                    <a href="#">List Admins</a>
+                  </li>
+                  <li class="sub-menu-item" id="add-new-admin">
+                    <a href="#">Add New Admin</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="menu-item" id="users">
+                <a href="#">
+                  <div><img src="images/admin-menu-3.svg" alt="" /> Users</div>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </a>
+                <ul class="sub-menu">
+                  <li class="sub-menu-item" id="list-users">
+                    <a href="#">List Users</a>
+                  </li>
+                  <li class="sub-menu-item" id="add-new-user">
+                    <a href="#">Add New Users</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="menu-item" id="invoices">
+                <a href="#">
+                  <div>
+                    <img src="images/admin-menu-6.svg" alt="" /> Invoices
+                  </div>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </a>
+                <ul class="sub-menu">
+                  <li class="sub-menu-item" id="list-invoice">
+                    <a href="#">List Invoice</a>
+                  </li>
+                  <li class="sub-menu-item" id="add-new-user">
+                    <a href="#">Detail Invoice</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="menu-item" id="products">
+                <a href="#">
+                  <div>
+                    <img src="images/admin-menu-5.svg" alt="" /> Products
+                  </div>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </a>
+                <ul class="sub-menu">
+                  <li class="sub-menu-item" id="list-product">
+                    <a href="#">List Products</a>
+                  </li>
+                  <li class="sub-menu-item" id="product-detail">
+                    <a href="#">Product Details</a>
+                  </li>
+                  <li class="sub-menu-item" id="add-new-product">
+                    <a href="#">Add New Product</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="menu-item" id="orders">
+                <a href="#">
+                  <div><img src="images/admin-menu-7.svg" alt="" /> Orders</div>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </a>
+                <ul class="sub-menu">
+                  <li class="sub-menu-item" id="list-order">
+                    <a href="#">List Orders</a>
+                  </li>
+                  <li class="sub-menu-item" id="order-detail">
+                    <a href="#">Order Details</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </aside>
+
+          <!-- Phần Right Main -->
+          <div class="right-main col-lg-10">
+            <h3>Dashboard</h3>
+            <div class="row">
+              <section class="col-lg-6" id="section-show-users">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>Người Dùng Mới</h5>
+                    <div class="search-user-main">
+                      <input
+                        type="text"
+                        name=""
+                        id="input-search-user-main"
+                        placeholder="Tìm kiếm"
+                      />
+                      <button class="btn btn-danger">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="select-sort my-3">
+                    <select class="sort-by">
+                      <option value="1">Sort by name from A to Z</option>
+                      <option value="2">Sort by name from Z to A</option>
+                    </select>
+                  </div>
+                  <div class="table-responsive-md">
+                    <table class="show-content">
+                      <thead>
+                        <tr>
+                          <th>Ảnh đại diện</th>
+                          <th>Tên người dùng</th>
+                          <th>Vai trò</th>
+                          <th>Trạng thái</th>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>
+                          <img src="images/somi-that-no-den.png" alt="" />
+                        </td>
+                        <td>User 1</td>
+                        <td>Customer</td>
+                        <td>
+                          <button class="btn btn-success rounded-pill p-0 px-2">
+                            Active
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <img src="images/somi-that-no-den.png" alt="" />
+                        </td>
+                        <td>User 1</td>
+                        <td>Customer</td>
+                        <td>
+                          <button class="btn btn-success rounded-pill p-0 px-2">
+                            Active
+                          </button>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </section>
+              <section class="col-lg-6" id="section-show-product">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>Sản Phẩm Mới</h5>
+                    <div class="search-product-main">
+                      <input
+                        type="text"
+                        name=""
+                        id="input-search-product-main"
+                        placeholder="Tìm kiếm"
+                      />
+                      <button class="btn btn-danger">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="select-sort my-3">
+                    <select class="sort-by">
+                      <option value="1">Sort by name from A to Z</option>
+                      <option value="2">Sort by name from Z to A</option>
+                    </select>
+                  </div>
+                  <div class="table-responsive-md">
+                    <table class="show-content">
+                      <thead>
+                        <tr>
+                          <th>Ảnh sản phẩm</th>
+                          <th>Tên Sản phẩm</th>
+                          <th>Giá Sản phẩm</th>
+                          <th>Số lượng đã bán</th>
+                          <th>Hành động</th>
+                        </tr>
+                      </thead>
+                      <tr>
+                        <td>
+                          <img src="images/somi-that-no-den.png" alt="" />
+                        </td>
+                        <td>product 1</td>
+                        <td>65.000đ</td>
+                        <td>10</td>
+                        <td>
+                          <a href="#"> <i class="far fa-edit"></i></a>
+                          <a href="#"><i class="fas fa-trash"></i></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <img src="images/somi-that-no-den.png" alt="" />
+                        </td>
+                        <td>product 1</td>
+                        <td>65.000đ</td>
+                        <td>10</td>
+                        <td>
+                          <a href="#"> <i class="far fa-edit"></i></a>
+                          <a href="#"><i class="fas fa-trash"></i></a>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </section>
+              <section class="map col-lg-6">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>Bản Đồ</h5>
+                  </div>
+                  <div class="mapouter">
+                    <div class="gmap_canvas">
+                      <iframe
+                        width="100%"
+                        height="510"
+                        id="gmap_canvas"
+                        src="https://maps.google.com/maps?q=đà nẵng&t=&z=10&ie=UTF8&iwloc=&output=embed"
+                        frameborder="0"
+                        scrolling="no"
+                        marginheight="0"
+                        marginwidth="0"
+                      ></iframe
+                      ><a href="https://2yu.co">2yu</a><br /><a
+                        href="https://embedgooglemap.2yu.co"
+                        >html embed google map</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section class="admin-content">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>Admin list</h5>
+                    <div class="search-admin-list">
+                      <input
+                        type="text"
+                        name=""
+                        id="input-search-admin"
+                        placeholder="Tìm kiếm"
+                      />
+                      <button class="btn btn-danger">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="table-responsive-md">
+                    <table class="table" id="table-admin"></table>
+                  </div>
+                </div>
+              </section>
+              <section class="add-admin">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>Add New Admin</h5>
+                  </div>
+                  <form action="#" id="add-admin-form" class="row">
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="username-admin"
+                        placeholder="Username"
+                        class="rounded p-2"
+                      />
+                      <p id="error-username-admin" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="fullname-admin"
+                        placeholder="Họ tên"
+                        class="rounded p-2"
+                      />
+                      <p id="error-fullname-admin" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="email"
+                        id="email-admin"
+                        placeholder="Email"
+                        class="rounded p-2"
+                      />
+                      <p id="error-email-admin" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="password"
+                        id="password-admin"
+                        placeholder="Password"
+                        class="rounded p-2"
+                      />
+                      <i class="fa-solid fa-eye" id="show-pass-admin"></i>
+                      <i class="fa-solid fa-eye-slash" id="hide-pass-admin"></i>
+                      <p id="error-password-admin" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="role-admin"
+                        placeholder="Role"
+                        class="rounded p-2"
+                        value="Admin"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <span class="rounded p-2">
+                        Cấp độ phân quyền<i
+                          class="fa-solid fa-chevron-down"
+                        ></i>
+                      </span>
+                      <ul class="rounded p-2">
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                      </ul>
+                      <p id="error-level-admin" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="status-admin"
+                        class="rounded p-2"
+                        value="Active"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="file"
+                        id="avatar-admin"
+                        class="rounded p-2"
+                        accept="image/*"
+                      />
+                    </div>
+                    <div class="px-2">
+                      <input
+                        type="submit"
+                        id="btn-add-admin"
+                        class="rounded p-2 btn btn-danger"
+                        value="Đăng ký Admin"
+                      />
+                    </div>
+                  </form>
+                </div>
+              </section>
+              <!-- Phần render cho List Users -->
+              <section class="user-content">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>User list</h5>
+                    <div class="search-user-list">
+                      <input
+                        type="text"
+                        name=""
+                        id="input-search-user"
+                        placeholder="Tìm kiếm"
+                      />
+                      <button class="btn btn-danger">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="table-responsive-md">
+                    <table class="table" id="table-user"></table>
+                  </div>
+                </div>
+              </section>
+              <section class="product-content">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>Product List</h5>
+                    <div class="search-product-list">
+                      <input
+                        type="text"
+                        name=""
+                        id="input-search-product"
+                        placeholder="Tìm kiếm"
+                      />
+                      <button class="btn btn-danger">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </div>
+                    <button
+                      class="btn btn btn-outline-success position-static"
+                      id="open-add-product-form"
+                    >
+                      Thêm sản phẩm
+                    </button>
+                  </div>
+                  <div class="table-responsive-md">
+                    <table class="table" id="table-product"></table>
+                  </div>
+                </div>
+              </section>
+
+              <!-- PHẦN ADD SẢN PHẨM MỚI -->
+              <section class="add-product">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>Thêm sản phẩm</h5>
+                  </div>
+                  <form action="#" id="add-product-form" class="row">
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="id-product"
+                        placeholder="ID sản phẩm tạo tự động"
+                        class="rounded p-2"
+                        readonly
+                      />
+                      <p id="error-id-product" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="code-product"
+                        placeholder="Nhập Mã sản phẩm"
+                        class="rounded p-2"
+                      />
+                      <p id="error-code-product" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="name-product"
+                        placeholder="Nhập Tên sản phẩm"
+                        class="rounded p-2"
+                      />
+                      <p id="error-name-product" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="group-product"
+                        placeholder="Nhóm sản phẩm"
+                        class="rounded p-2"
+                      />
+                      <p id="error-group-product" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="type-product"
+                        placeholder="Loại sản phẩm cho Nam hay Nữ"
+                        class="rounded p-2"
+                      />
+                      <p id="error-type-product" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <select name="" id="color" class="p-2 rounded">
+                        <option value="">Chọn màu sản phẩm</option>
+                        <option value="yellow">Vàng</option>
+                        <option value="red">Đỏ</option>
+                        <option value="blue-black">Xanh đen</option>
+                        <option value="black">Đen</option>
+                        <option value="orange">Cam</option>
+                        <option value="grey">Xám</option>
+                        <option value="brown">Nâu</option>
+                      </select>
+                      <p id="error-color" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="code-color-product"
+                        placeholder="Mã màu sản phẩm"
+                        class="rounded p-2"
+                      />
+                      <p id="error-code-color-product" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="current-price"
+                        placeholder="Giá hiện tại "
+                        class="rounded p-2"
+                      />
+                      <p id="error-current-price" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="old-price"
+                        placeholder="Giá cũ "
+                        class="rounded p-2"
+                      />
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="size"
+                        class="rounded p-2"
+                        placeholder="Kích thước sản phẩm"
+                      />
+                      <p id="error-size" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="text"
+                        id="number-in-stock"
+                        class="rounded p-2"
+                        placeholder="Số lượng nhập kho"
+                      />
+                      <p id="error-number-stock" class="error"></p>
+                    </div>
+                    <div class="col-lg-6 px-2">
+                      <input
+                        type="file"
+                        id="image-product"
+                        class="rounded p-2"
+                        accept="image/*"
+                      />
+                    </div>
+                    <div class="col-lg-12 px-2">
+                      <textarea
+                        name=""
+                        id="product-desc"
+                        rows="5"
+                        placeholder="Mô tả sản phẩm"
+                      ></textarea>
+                      <p id="error-product-desc" class="error"></p>
+                    </div>
+
+                    <div class="px-2">
+                      <input
+                        type="submit"
+                        id="btn-add-product"
+                        class="rounded p-2 btn btn-danger"
+                        value="Thêm mới sản phẩm"
+                      />
+                    </div>
+                  </form>
+                </div>
+              </section>
+
+              <!-- Phần Product detail -->
+              <section class="detail-product">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>Xem chi tiết sản phẩm</h5>
+                  </div>
+                  <div class="product-info">
+                    <div class="row align-items-center">
+                      <div class="col-md-6 product-image align-self-center">
+                        <img
+                          src="images/ao-khoac-basic-cam-nam.png"
+                          alt=""
+                          height="400"
+                        />
+                      </div>
+                      <div class="col-md-6 text-body-tertiary detail-more-info">
+                        <h6
+                          class="text-decoration-underline fw-bold text-danger"
+                        >
+                          Thông tin chi tiết sản phẩm:
+                        </h6>
+                        <h3 class="detail-product-name">
+                          Áo khoác Basic Cam (Nam)
+                        </h3>
+                        <p class="fw-bold text-secondary detail-product-code">
+                          Mã sản phẩm: ANK-BS
+                        </p>
+                        <p class="content-product-desc">
+                          Lorem ipsum, dolor sit amet consectetur adipisicing
+                          elit. Veritatis excepturi voluptas magnam sint ab
+                          suscipit enim eos non facilis ducimus quaerat esse
+                          possimus, cum impedit. Tenetur, deserunt. Molestiae,
+                          natus facere?
+                        </p>
+                        <div class="price py-2 d-flex align-items-center">
+                          <h5
+                            class="detail-new-price fw-bold text-danger m-0 me-2"
+                          >
+                            300.000đ
+                          </h5>
+                          <p
+                            class="detail-old-price text-decoration-line-through text-secondary fw-bold"
+                          >
+                            600.000đ
+                          </p>
+                        </div>
+                        <p class="detail-sold-number">
+                          Số lượng đã bán:
+                          <span class="fw-bold text-danger">15</span>
+                        </p>
+                        <p class="in-stock-number">
+                          Số lượng tồn kho:
+                          <span class="fw-bold text-danger">5</span>
+                        </p>
+                        <p
+                          class="color-product-detail d-flex align-items-center"
+                        >
+                          Màu sắc: <span></span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!--PHẦN LIST ORDER BILLING  -->
+              <section class="order-content">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>Danh sách Đơn hàng</h5>
+                    <div class="search-order-list">
+                      <input
+                        type="text"
+                        name=""
+                        id="input-order"
+                        placeholder="Tìm kiếm"
+                      />
+                      <button class="btn btn-danger">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="table-responsive-md">
+                    <table class="table" id="table-order">
+                      <thead>
+                        <tr>
+                          <th>STT</th>
+                          <th>ID đơn hàng</th>
+                          <th>Ngày đặt hàng</th>
+                          <th>Số lượng hàng</th>
+                          <th>Tổng giá trị đơn hàng</th>
+                          <th>Trạng thái đơn hàng</th>
+                          <th>Duyệt đơn hàng</th>
+                          <th>Chi tiết đơn hàng</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>00001</td>
+                          <td>30/04/2023</td>
+                          <td>03</td>
+                          <td>350.000đ</td>
+                          <td>
+                            <input
+                              type="button"
+                              class="btn btn-warning py-0 input-status"
+                              disabled
+                              value="Đang chờ duyệt"
+                            />
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-outline-primary btn-approve"
+                              onclick="handleApproveOrder(this, 2)"
+                            >
+                              Duyệt
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-danger"
+                              onclick="handleViewOrder(this, 2)"
+                            >
+                              Xem đơn hàng <i class="fa-solid fa-eye"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Phần VIEW DETAIL FOR EACH ORDER -->
+              <section class="view-order-content">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>Chi tiết đơn hàng</h5>
+                  </div>
+                  <div class="order-info">
+                    <p class="fw-medium text-body-tertiary">
+                      Số đơn hàng:
+                      <span class="text-danger fw-bold">#00001</span>
+                    </p>
+                    <p class="fw-medium text-body-tertiary">
+                      Email khách hàng:
+                      <span class="fw-bold text-danger"
+                        >sieuthai@gmail.com</span
+                      >
+                    </p>
+                    <p class="fw-medium text-body-tertiary">
+                      Ngày đặt hàng:
+                      <span class="fw-bold text-danger">30/04/2023</span>
+                    </p>
+                  </div>
+                  <div class="table-responsive-md">
+                    <table class="table" id="table-view-order">
+                      <thead>
+                        <tr>
+                          <th>STT</th>
+                          <th>Mã sản phẩm</th>
+                          <th>Hình ảnh sản phẩm</th>
+                          <th>Tên sản phẩm</th>
+                          <th>Màu</th>
+                          <th>Kích thước</th>
+                          <th>Giá sản phẩm</th>
+                          <th>Số lượng</th>
+                          <th>Thành tiền</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>ANK-BS</td>
+                          <td>
+                            <img
+                              src="images/ao-khoac-basic-cam-nam.png"
+                              alt=""
+                            />
+                          </td>
+                          <td>Áo khoác Nam Basic - Cam</td>
+                          <td>Cam</td>
+                          <td>XL</td>
+                          <td>300.000đ</td>
+                          <td>03</td>
+                          <td>900.000</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="payment-info float-end">
+                    <h6 class="fw-bold">Tổng Giá trị đơn hàng</h6>
+                    <p>
+                      Tổng tiền hàng:
+                      <span class="total-money text-danger fw-medium"
+                        >900.000đ</span
+                      >
+                    </p>
+                    <p>
+                      Phí vận chuyển:
+                      <span class="total-money text-danger fw-medium">0đ</span>
+                    </p>
+                    <p>
+                      Tổng tiền thanh toán:
+                      <span class="total-money text-danger fw-bold"
+                        >930.000đ</span
+                      >
+                    </p>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </section>
+
+              <!--PHẦN LIST HOÁ ĐƠN KHI DUYỆT ĐƠN HÀNG  -->
+              <section class="invoice-content">
+                <div class="p-3">
+                  <div class="top-section">
+                    <h5>Danh sách Đơn hàng</h5>
+                    <div class="search-invoice-list">
+                      <input
+                        type="text"
+                        name=""
+                        id="input-invoice"
+                        placeholder="Tìm kiếm"
+                      />
+                      <button class="btn btn-danger">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="table-responsive-md">
+                    <table class="table" id="table-invoice">
+                      <thead>
+                        <tr>
+                          <th>STT</th>
+                          <th>ID Hoá đơn</th>
+                          <th>Ngày Hoá đơn</th>
+                          <th>Tên khách hàng</th>
+                          <th>Email Khách hàng</th>
+                          <th>Số lượng hàng</th>
+                          <th>Tổng giá trị Hoá đơn</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>00001</td>
+                          <td>30/04/2023</td>
+                          <td>03</td>
+                          <td>350.000đ</td>
+                          <td>350.000đ</td>
+                          <td>350.000đ</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="info-revenue">
+                    <div class="revenue-info float-end">
+                      <h6 class="fw-bold">Tổng Doanh Thu</h6>
+                      <p>
+                        Tổng tiền bán hàng:
+                        <span class="total-revenue text-danger fw-bold"
+                          >900.000đ</span
+                        >
+                      </p>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- nhúng js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="admin/admin.js"></script>
+    <script src="admin/admin_db.js"></script>
+    <script src="admin/order.js"></script>
+    <script src="admin/product.js"></script>
+    <script src="admin/user.js"></script>
+  </body>
+</html>

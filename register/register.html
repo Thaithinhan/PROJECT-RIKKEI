@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Yeseva+One&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="register.css" />
+  </head>
+  <body>
+    <form id="login-box">
+      <div class="logo"><img src="../images/logo.png" alt="" /></div>
+      <div class="main-content">
+        <div class="left">
+          <h1>Sign up</h1>
+          <div>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              id="username"
+            />
+            <p class="error" id="error-username"></p>
+          </div>
+          <div>
+            <input type="email" name="email" placeholder="E-mail" id="email" />
+            <p class="error" id="error-email"></p>
+          </div>
+          <div>
+            <input
+              type="text"
+              name="fullname"
+              placeholder="Họ và tên"
+              id="fullname"
+            />
+            <p class="error" id="error-fullname"></p>
+          </div>
+          <div class="password">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              id="password"
+            />
+            <p class="error" id="error-password"></p>
+          </div>
+          <div>
+            <input
+              type="password"
+              name="password2"
+              placeholder="Retype password"
+              id="repassword"
+            />
+            <p class="error" id="error-repassword"></p>
+          </div>
+          <div class="avatar">
+            <input type="file" name="avatar" accept="image/*" id="avatar" />
+          </div>
+          <input type="submit" name="signup_submit" value="Sign me up" />
+        </div>
+        <div class="right">
+          <span class="loginwith">Sign in with<br />social network</span>
+          <button class="social-signin facebook">Log in with facebook</button>
+          <button class="social-signin twitter">Log in with Twitter</button>
+          <button class="social-signin google">Log in with Google+</button>
+        </div>
+      </div>
+
+      <div class="or">OR</div>
+    </form>
+
+    <!-- Nhúng JS -->
+    <script src="register.js"></script>
+  </body>
+</html>

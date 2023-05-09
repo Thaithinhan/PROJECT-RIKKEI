@@ -1,0 +1,92 @@
+:root {
+  --main-color: #cd1818;
+  --black-color: #252525;
+  --yellow-color: #ea9d02;
+  --secondary-color: #e4e4e4;
+  --light-grey: #e2e1e1;
+  --success-color: rgb(15, 165, 15);
+  --nav-color: #f1e5de;
+  --background-product: #f4f3fb;
+  --admin-main-color: #f6f7fb;
+}
+
+/* ********************************************* */
+/* Phần HEADER */
+header aside {
+  display: flex;
+}
+header .right-header {
+  border-left: 5px solid var(--main-color);
+}
+header .right-header .toggle {
+  display: none;
+}
+header .right-header .buttons-header {
+  width: 100%;
+}
+header h5 {
+  font-size: 0.75rem;
+}
+header .right-header button span {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  background-color: var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: whitesmoke;
+  top: 0;
+  right: 5px;
+}
+header .right-header button img {
+  max-width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border: 2px solid var(--main-color);
+  border-radius: 50%;
+}
+header .right-header i {
+  font-size: 25px;
+  color: var();
+}
+
+/* Phần Main */
+
+/* Phần Sidebar main */
+main aside {
+  display: block;
+}
+main aside ul {
+  position: sticky;
+  top: 75px;
+}
+
+/* Phần RIGHT Main */
+main .right-main {
+  border-left: 5px solid var(--main-color);
+  padding: 25px;
+  /* margin-left: 317px; */
+}
+main .right-main section .top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+main .right-main section .top-section button {
+  position: absolute;
+  right: 0px;
+}
+
+/* Phần cho list admin page */
+main .right-main section .top-section .search-admin-list input,
+main .right-main section .top-section .search-user-list input,
+main .right-main section .top-section .search-product-list input,
+main .right-main section .top-section .search-order-list input,
+main .right-main section .top-section .search-invoice-list input {
+  width: 500px;
+}

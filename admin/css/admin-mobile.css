@@ -1,0 +1,384 @@
+:root {
+  --main-color: #cd1818;
+  --black-color: #252525;
+  --yellow-color: #ea9d02;
+  --secondary-color: #e4e4e4;
+  --light-grey: #e2e1e1;
+  --success-color: rgb(15, 165, 15);
+  --nav-color: #f1e5de;
+  --background-product: #f4f3fb;
+  --admin-main-color: #f6f7fb;
+  --admin-second-color: #c388f6;
+}
+* {
+  font-family: "Quicksand", sans-serif;
+}
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ********************************************* */
+/* Phần HEADER */
+header {
+  background-color: var(--nav-color);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 200;
+}
+header aside {
+  display: none;
+}
+header aside .logo-img {
+  max-width: 80px;
+  margin-right: 20px;
+}
+
+header .right-header {
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--light-grey);
+}
+header .right-header .toggle {
+  display: flex;
+  align-items: center;
+}
+
+header .right-header .buttons-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+header .right-header button {
+  position: relative;
+}
+header h4 {
+  color: var(--main-color);
+}
+header h5 {
+  font-size: 15px;
+  color: var(--main-color);
+}
+header .right-header button span {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  font-size: 7px;
+  font-weight: 700;
+  background-color: var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  top: 8px;
+  right: 8px;
+}
+header .right-header button span.admin-username {
+  width: auto;
+  background-color: transparent;
+}
+header .right-header button img {
+  max-width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border: 2px solid var(--main-color);
+  border-radius: 50%;
+}
+header .right-header i {
+  font-size: 15px;
+  color: var();
+}
+
+/* Phần Main */
+main {
+  margin-top: 75px;
+}
+
+/* Phần Sidebar main */
+main aside {
+  display: none;
+}
+main aside ul.list-main-menu > li {
+  transition: all 0.6s;
+}
+main aside ul.list-main-menu > li > a {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+main aside ul.list-main-menu > li > a img {
+  width: 20px;
+  margin-right: 10px;
+}
+main aside ul.list-main-menu > li:hover > a {
+  background-color: var(--nav-color);
+}
+main aside ul.list-main-menu > li > a > i {
+  font-size: 12px;
+}
+main aside ul.list-main-menu > li > .sub-menu {
+  display: none;
+}
+main aside ul.list-main-menu > li > .sub-menu > li {
+  padding: 5px 0;
+}
+main aside ul.list-main-menu > li > .sub-menu > li:hover a {
+  background-color: var(--main-color);
+  color: white;
+  transition: all 0.6s;
+  font-weight: 700;
+}
+main aside ul.list-main-menu > li > .sub-menu > li > a {
+  display: inline-block;
+  padding: 5px 45px;
+  width: 100%;
+  font-size: 13px;
+  transition: all 0.6s;
+}
+
+/* Phần RIGHT Main */
+main .right-main {
+  background-color: var(--nav-color);
+}
+main .right-main section > div {
+  background-color: white;
+  box-shadow: 5px 5px 25px white;
+  margin: 20px 0;
+  border-radius: 10px;
+}
+main .right-main section table {
+  width: 100%;
+  margin-top: 50px;
+}
+main .right-main section table tr {
+  background-color: var(--nav-color);
+  color: var(--main-color);
+}
+main .right-main section table tr th {
+  font-size: 13px;
+  text-align: center;
+  padding: 10px;
+  border-bottom: var(--main-color) 1px solid;
+}
+main .right-main section table tr td {
+  padding: 10px;
+  text-align: center;
+  font-size: 13px;
+  vertical-align: middle;
+  border-bottom: var(--main-color) 1px solid;
+}
+.search-user-main,
+.search-product-main,
+.search-admin-list,
+.search-user-list,
+.search-product-list,
+.search-order-list,
+.search-invoice-list {
+  position: relative;
+  font-size: 13px;
+  text-align: right;
+}
+main .right-main section .top-section input {
+  padding: 10px;
+  outline: none;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--admin-main-color);
+  min-width: 200px;
+}
+main .right-main section .top-section button {
+  position: absolute;
+  right: 0px;
+}
+main .right-main section .top-section button i {
+  font-size: 13px;
+}
+main .right-main section table td img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  border: 1px solid var(--main-color);
+}
+main .right-main .select-sort {
+  text-align: right;
+}
+main .right-main .select-sort select {
+  padding: 10px;
+  border: 0.5px solid var(--main-color);
+  color: var(--main-color);
+}
+main .right-main section table button {
+  font-size: 13px;
+}
+/* Phần GGMap */
+
+.gmap_canvas {
+  overflow: hidden;
+  background: none !important;
+  height: 510px;
+  width: 100%;
+}
+
+.mapouter {
+  position: relative;
+  text-align: right;
+  height: 510px;
+  width: 100%;
+}
+
+/* PHẦN LIST CHI TIẾT VÀ HIỂN THỊ Admin, USER, PRODUCT */
+.admin-content,
+.user-content,
+.product-content,
+.order-content,
+.invoice-content {
+  display: none;
+}
+#table-admin td button,
+#table-user td button {
+  font-size: 13px;
+}
+
+/* Ẩn hiện trạng thái user */
+.status-inactive {
+  display: none;
+}
+
+/* Phần FOrm thêm mới admin add admin */
+.add-admin {
+  display: none;
+}
+.add-admin #add-admin-form > div {
+  margin: 10px 0;
+  position: relative;
+}
+.add-admin #add-admin-form > div > * {
+  width: 100%;
+  border: 1px solid var(--nav-color);
+  font-size: 15px;
+}
+.add-admin #add-admin-form > div > p {
+  color: red;
+  border: none;
+  margin: 5px 0 20px;
+}
+.add-admin #add-admin-form > div > input:focus-visible {
+  outline: 1px solid var(--main-color);
+}
+.add-admin #add-admin-form > div > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.add-admin #add-admin-form > div > i {
+  font-size: 12px;
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  width: 20px;
+  border: none;
+  cursor: pointer;
+}
+.add-admin #add-admin-form > div > i#show-pass-admin {
+  display: none;
+}
+.add-admin #add-admin-form > div i {
+  font-size: 12px;
+  transition: all 0.6s;
+}
+.add-admin #add-admin-form > div > ul {
+  display: none;
+}
+.add-admin #add-admin-form > div > ul > li {
+  cursor: pointer;
+}
+
+/* Phần HÌNH ẢNH SẢN PHẨM LIST PRODUCT */
+#table-product td img {
+  width: 100px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0;
+}
+/* Phần FORM thêm mới product */
+.add-product {
+  display: none;
+}
+.add-product #add-product-form > div {
+  margin: 10px 0;
+  position: relative;
+}
+.add-product #add-product-form > div > * {
+  width: 100%;
+  border: 1px solid var(--nav-color);
+  font-size: 15px;
+}
+.add-product #add-product-form > div > p {
+  color: red;
+  border: none;
+  margin: 5px 0 20px;
+}
+.add-product #add-product-form > div > input:focus-visible,
+.add-product #add-product-form > div > select:focus-visible,
+.add-product #add-product-form > div > textarea:focus-visible {
+  outline: 1px solid var(--main-color);
+}
+.add-product #add-product-form > div > textarea {
+  text-align: justify;
+}
+.add-product #add-product-form > div > select > option {
+  display: block;
+}
+.add-product #add-product-form > div > select span.dot {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.add-product #add-product-form > div > select span.dot-yellow {
+  background-color: yellow;
+}
+.add-product #add-product-form > div > select span.dot-red {
+  background-color: red;
+}
+.add-product #add-product-form > div > select span.dot-blue-black {
+  background-color: red;
+}
+
+/* Phần view chi tiết từng sản phẩm */
+.detail-product {
+  display: none;
+}
+.detail-product .product-info .product-image img {
+  object-fit: contain;
+}
+.detail-product .product-info .color-product-detail > span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: orangered;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+/* View chi tiết ORDER */
+.view-order-content {
+  display: none;
+}
+.right-main section.view-order-content table td {
+  font-weight: 500;
+}
+.right-main section.view-order-content table td img {
+  width: 100px;
+  height: auto;
+  border-radius: 0;
+  border: none;
+}
