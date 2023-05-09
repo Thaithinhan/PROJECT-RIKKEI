@@ -93,6 +93,7 @@ if (userLogin) {
     if (find_user.cart.length == 0) {
       find_user.cart = [...cart];
       // console.log(cart);
+      return;
     }
     user.cart.forEach((product) => {
       cart.forEach((cartProduct) => {
@@ -105,7 +106,7 @@ if (userLogin) {
   });
   const pushProduct = cart.filter((item) => !item.isAdd);
   find_user.cart = [...find_user.cart, ...pushProduct];
-  console.log(find_user.cart);
+  // console.log(find_user.cart);
   //Lấy số lượng hàng đã đặt
   find_user.cart.forEach((item) => {
     number_buy += item.quantity;
@@ -119,7 +120,7 @@ if (userLogin) {
       list_users[index] = find_user;
     }
   });
-  console.log(list_users);
+  // console.log(list_users);
   localStorage.removeItem("cart");
   localStorage.setItem("list-user", JSON.stringify(list_users));
 }
