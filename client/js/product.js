@@ -18,13 +18,22 @@ function renderAllProduct(data) {
                   >
                     <p class="price">
                       <span class="old-price me-3">${item.old_price}</span>
-                      <span class="new-price">${item.current_price}</span>
+                      <span class="new-price">${Number(
+                        item.current_price
+                      ).toLocaleString("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      })}</span>
                     </p>
-                    <a href="#" class="view-product" onclick="handleView(this,${item.id},'${item.code}')"
+                    <a href="#" class="view-product" onclick="handleView(this,${
+                      item.id
+                    },'${item.code}')"
                       ><i class="fa-solid fa-eye"></i> View</a
                     >
                   </div>
-                  <button class="btn btn-danger btn-add-cart"  onclick="handleAddCart(this,${item.id})">
+                  <button class="btn btn-danger btn-add-cart"  onclick="handleAddCart(this,${
+                    item.id
+                  })">
                     Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i>
                   </button>
                 </div>

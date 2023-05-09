@@ -58,7 +58,10 @@ list_products.forEach((product) => {
 list_desc = Array.from(new Set(list_desc));
 //giá
 document.querySelector(".view-product-section .details .price span").innerHTML =
-  choose_product.current_price + " " + "VND";
+  Number(choose_product.current_price).toLocaleString("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
 //size
 let sizes = document.querySelector(".view-product-section .details .sizes");
 let list_size = [];

@@ -85,34 +85,27 @@ function addCartProductDetail() {
 
 //Đẩy cart vào user đăng nhập khi Login và xoá giỏ hàng bên ngoài local
 if (userLogin) {
-  let isDublicateProduct = false;
   const find_user = list_users.find((item) => item.email == userLogin.email);
-  list_users.forEach((item, index) => {
-    if (item.email == userLogin.email) {
-      if (cart.length > 0) {
-        find_user.cart.forEach((product, index) => {
-          cart.forEach((cartProduct, indexCart) => {
-            if (cartProduct.id == product.id) {
-              isDublicateProduct = true;
-            }
-          });
-        });
-      }
+  list_users.forEach((user) => {
+    if (user.email != userLogin.email) {
+      return;
     }
-  });
-  if (!isDublicateProduct) {
-    find_user.cart = [...find_user.cart, ...cart];
-  } else {
-    find_user.cart.forEach((item, index) => {
-      cart.forEach((cart1, index1) => {
-        if (item.id == cart1.id) {
-          find_user.cart[index].quantity += cart1.quantity;
-        } else {
-          find_user.cart.push(cart1);
+    if (find_user.cart.length == 0) {
+      find_user.cart = [...cart];
+      // console.log(cart);
+    }
+    user.cart.forEach((product) => {
+      cart.forEach((cartProduct) => {
+        if (cartProduct.id == product.id) {
+          product.quantity += cartProduct.quantity;
+          cartProduct.isAdd = true;
         }
       });
     });
-  }
+  });
+  const pushProduct = cart.filter((item) => !item.isAdd);
+  find_user.cart = [...find_user.cart, ...pushProduct];
+  console.log(find_user.cart);
   //Lấy số lượng hàng đã đặt
   find_user.cart.forEach((item) => {
     number_buy += item.quantity;
@@ -120,12 +113,13 @@ if (userLogin) {
   document.querySelectorAll(".number-buy").forEach((element) => {
     element.innerHTML = number_buy;
   });
-  //Đẩy Find-user vào list user và lưu lại trên local
+  // Đẩy Find-user vào list user và lưu lại trên local
   list_users.forEach((user, index) => {
     if (user.email == find_user.email) {
       list_users[index] = find_user;
     }
   });
+  console.log(list_users);
   localStorage.removeItem("cart");
   localStorage.setItem("list-user", JSON.stringify(list_users));
 }

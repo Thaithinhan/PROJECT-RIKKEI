@@ -283,20 +283,29 @@ function renderProduct(list_product) {
                             />
                           </td>
                           <td>${element.name}</td>
-                          <td>${element.current_price}</td>
+                          <td>${element.current_price.toLocaleString("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          })}</td>
                           <td>${element.color}</td>
                           <td>${element.size}</td>
                           <td>${element.sold}</td>
                           <td>${element.number_instock}</td>
                           <td>
                             <a href="#" class="me-2 edit"
-                              onclick="handleEditProduct(this, ${element.id})"><i class="far fa-edit"></i
+                              onclick="handleEditProduct(this, ${
+                                element.id
+                              })"><i class="far fa-edit"></i
                             >
                             </a>
-                            <a href="#" onclick="handleRemoveProduct(this, ${element.id})" class="me-2 remove">
+                            <a href="#" onclick="handleRemoveProduct(this, ${
+                              element.id
+                            })" class="me-2 remove">
                             <i class="fas fa-trash"></i>
                             </a>
-                            <a href="#" onclick="handleViewProduct(this, ${element.id})" class="view">
+                            <a href="#" onclick="handleViewProduct(this, ${
+                              element.id
+                            })" class="view">
                             <i class="fa-solid fa-eye"></i>
                             </a>
                             </td>
@@ -338,26 +347,41 @@ function handleViewProduct(element, id) {
                           <h5
                             class="detail-new-price fw-bold text-danger m-0 me-2"
                           >
-                            ${choseProduct.current_price} VNĐ
+                            ${choseProduct.current_price.toLocaleString(
+                              "vi-VN",
+                              {
+                                style: "currency",
+                                currency: "VND",
+                              }
+                            )}
                           </h5>
                           <p
                             class="detail-old-price text-decoration-line-through text-secondary fw-bold"
                           >
-                            ${choseProduct.old_price}
+                            ${choseProduct.old_price.toLocaleString("vi-VN", {
+                              style: "currency",
+                              currency: "VND",
+                            })}
                           </p>
                         </div>
                         <p class="detail-sold-number">
                           Số lượng đã bán:
-                          <span class="fw-bold text-danger">${choseProduct.sold}</span>
+                          <span class="fw-bold text-danger">${
+                            choseProduct.sold
+                          }</span>
                         </p>
                         <p class="in-stock-number">
                           Số lượng tồn kho:
-                          <span class="fw-bold text-danger">${choseProduct.number_instock}</span>
+                          <span class="fw-bold text-danger">${
+                            choseProduct.number_instock
+                          }</span>
                         </p>
                         <p
                           class="color-product-detail d-flex align-items-center"
                         >
-                          Màu sắc: <span style="background: ${choseProduct.code_color}"></span>
+                          Màu sắc: <span style="background: ${
+                            choseProduct.code_color
+                          }"></span>
                         </p>`;
   detailMoreInfoElement.innerHTML = content;
 }

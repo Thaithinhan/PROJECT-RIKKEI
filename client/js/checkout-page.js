@@ -1,16 +1,16 @@
 //TẠO MẢNG LIST ORDER CỦA NHIỀU KHÁCH HÀNG
 // console.log(cart_user);
 
-const orders = JSON.parse(localStorage.getItem("list-order")) ?? [];
+let listOrders = JSON.parse(localStorage.getItem("list-order")) ?? [];
 if (!localStorage.getItem("list-order")) {
-  localStorage.setItem("list-order", JSON.stringify(orders));
+  localStorage.setItem("list-order", JSON.stringify(listOrders));
 }
 let id_order = 1;
-if (orders.length > 0) {
+if (listOrders.length > 0) {
   id_order =
     Number(
-      orders[orders.length - 1].id.substring(
-        orders[orders.length - 1].id.length - 1
+      listOrders[listOrders.length - 1].id.substring(
+        listOrders[listOrders.length - 1].id.length - 1
       )
     ) + 1;
 }
@@ -43,8 +43,8 @@ function confirmCheckout() {
     }
   });
   localStorage.setItem("list-user", JSON.stringify(list_users));
-  orders.push(new_order);
-  localStorage.setItem("list-order", JSON.stringify(orders));
+  listOrders.push(new_order);
+  localStorage.setItem("list-order", JSON.stringify(listOrders));
   alert("Đã đặt hàng thành công");
   window.location.href = "index.html";
 }
