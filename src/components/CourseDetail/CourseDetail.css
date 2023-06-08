@@ -1,0 +1,15 @@
+.right-course {
+  background-color: white;
+  color: black;
+  text-align: center;
+}
+.right-course video {
+  max-width: 340px;
+}
+
+.add-to-cart {
+  background-color: #a436f1;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,41 @@
+.add-course {
+  max-width: 800px;
+  margin: 30px auto;
+}
+
+form input,
+form select {
+  width: 100%;
+  margin: 20px;
+  padding: 20px;
+  border: 0.5px solid;
+}
+
+.item-course {
+  padding: 20px;
+  border-bottom: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.show-course {
+  align-items: center;
+}
+.img-course {
+  margin-right: 20px;
+}
+.img-course img {
+  max-width: 150px;
+  object-fit: cover;
+}
+
+.item-customer {
+  padding: 20px;
+  border-bottom: 1px solid;
+}
+
+.show-customer {
+  align-items: center;
+  column-gap: 20px;
+}

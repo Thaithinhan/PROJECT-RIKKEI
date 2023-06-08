@@ -1,0 +1,39 @@
+.dropdown-cate-container {
+  position: absolute;
+  top: 0px;
+  left: -100%;
+  background-color: white;
+  box-shadow: 3px 3px 3px 3px rgba(108, 104, 104, 0.25);
+  padding: 20px;
+  width: 50%;
+
+  z-index: 110;
+  transition: left 0.2s linear;
+}
+
+.show {
+  display: block;
+  left: 0;
+  transition: left 0.2s linear;
+}
+.dropdown-cate-container ul li {
+  padding: 10px 0;
+}
+
+.dropdown-cate-container a {
+  text-decoration: none;
+  color: black;
+}
+
+@media screen and (min-width: 992px) {
+  .dropdown-cate-container {
+    width: auto;
+    height: auto;
+    top: 60px;
+  }
+  .show {
+    display: block;
+    left: 5%;
+    transition: left 0.2s linear;
+  }
+}

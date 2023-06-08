@@ -1,0 +1,68 @@
+/* styles.css */
+
+.dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 0;
+  margin: 0 0 20px 0;
+  column-gap: 30px;
+  box-shadow: 2px 2px 1px 2px rgba(220, 213, 213, 0.3);
+}
+
+.dropdown__item {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.dropdown__title {
+  cursor: pointer;
+  position: relative;
+}
+
+.dropdown__arrow {
+  position: absolute;
+  top: 100%; /* Di chuyển mũi tên xuống dưới tiêu đề */
+  left: 50%; /* Đặt mũi tên ở giữa theo chiều ngang */
+  transform: translateX(-50%) rotate(180deg); /* Xoay mũi tên 180 độ */
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-top: 5px; /* Khoảng cách giữa mũi tên và tiêu đề */
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: #000 transparent transparent transparent;
+  transition: transform 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.dropdown__arrow.open {
+  opacity: 1;
+  transform: translateX(-50%) rotate(0deg); /* Xoay mũi tên về trạng thái ban đầu */
+}
+
+.dropdown__menu {
+  position: absolute;
+  background-color: #000 !important;
+  color: white;
+  width: 100%;
+  top: calc(80% + 10px); /* Khoảng cách giữa mũi tên và dropdown menu */
+  left: 0;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+}
+
+.dropdown__menu li {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.dropdown__menu li:hover {
+  background-color: #f1f1f1;
+  color: #000;
+}

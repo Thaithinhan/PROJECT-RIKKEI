@@ -1,0 +1,30 @@
+.swiper-slide.slide-first {
+  /* background-image: url("https://img-c.udemycdn.com/notices/web_carousel_slide/image/785695e9-5e74-486e-98d5-27354a474246.jpg"); */
+  height: 400px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.swiper-slide.slide-second {
+  /* background-image: url("https://img-c.udemycdn.com/notices/web_carousel_slide/image/e6cc1a30-2dec-4dc5-b0f2-c5b656909d5b.jpg"); */
+  height: 400px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0);
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.content-banner {
+  max-width: 440px;
+}

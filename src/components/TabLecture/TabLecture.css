@@ -1,0 +1,29 @@
+.search-tab,
+.comment-tab {
+  margin: 30px 0;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.search-tab input,
+.comment-tab input {
+  padding: 5px;
+  width: 30%;
+}
+
+.reviews-tab {
+  max-width: 70%;
+  margin: auto;
+  padding: 20px 0;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
+  border-bottom: 1px solid;
+}
+
+.reviews-tab img {
+  width: 70px;
+  width: 70px;
+  border-radius: 50%;
+}

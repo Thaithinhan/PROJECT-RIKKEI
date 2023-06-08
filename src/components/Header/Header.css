@@ -1,0 +1,117 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: #a436f1;
+}
+
+.navbar-toggler {
+  border: none;
+  outline: none;
+}
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.form-search {
+  display: flex;
+  align-items: center;
+}
+
+.form-search input,
+.form-search .btn-search-lg {
+  display: none;
+}
+
+.form-search .number-buy {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+  font-size: 14px;
+  background-color: var(--main-color);
+  top: 0;
+  right: -10px;
+}
+.form-search .login-btn,
+.form-search .signup-btn,
+.form-search .business,
+.form-search .teach-on-udemy,
+.form-search .list-wish,
+.form-search .user {
+  display: none;
+}
+.form-search .right-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 25px;
+}
+.form-search .right-info img {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.wrapper-nav {
+  flex-basis: 55%;
+}
+
+.user-info .user {
+  align-items: center;
+  column-gap: 15px;
+}
+.user-info .user img {
+  border-radius: 50%;
+}
+
+@media screen and (min-width: 992px) {
+  .wrapper-nav {
+    flex-basis: 100%;
+  }
+  .form-search {
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+  .form-search input {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+  }
+  .form-search .btn-search-sm {
+    display: none;
+  }
+  .form-search button.btn-search-lg {
+    display: block;
+    position: absolute !important;
+    left: 15px;
+  }
+
+  .navbar-expand-lg .navbar-collapse {
+    display: none !important;
+    flex-basis: auto;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .form-search input {
+    width: 35%;
+  }
+  .form-search .login-btn,
+  .form-search .signup-btn,
+  .form-search .business,
+  .form-search .teach-on-udemy,
+  .form-search .list-wish,
+  .form-search .user {
+    display: inline;
+  }
+}
+
+@media screen and (min-width: 1580px) {
+  .form-search input {
+    width: 50%;
+  }
+}

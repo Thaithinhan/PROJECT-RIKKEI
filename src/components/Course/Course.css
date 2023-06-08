@@ -1,0 +1,22 @@
+.course-component {
+  border-bottom: 0.5px solid;
+  padding: 10px 0;
+}
+.course-component .top-course img {
+  width: 260px;
+  border: 0.5px solid #ececec;
+  margin-right: 20px;
+}
+.add-to-cart-btn {
+  background-color: #a436f1;
+  color: white;
+  font-weight: bold;
+}
+
+@media screen and (min-width: 992px) {
+  .nav-link.course-component {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

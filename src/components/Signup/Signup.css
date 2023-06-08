@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+.signup-component {
+  max-width: 400px;
+  margin: 80px auto;
+  text-align: center;
+}
+
+.signup-component form {
+  padding: 20px;
+}
+
+.signup-component form input {
+  width: 100%;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.signup-component form input::placeholder {
+  color: black;
+  font-weight: bold;
+  text-align: left;
+}
+
+#btn-submit {
+  background-color: #a436f1;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 10px;
+  text-align: center;
+}
+.clear {
+  margin-top: 20px;
+  border-bottom: 1px solid #a436f1;
+}
+
+p > a {
+  color: #a436f1;
+  font-weight: bold;
+}

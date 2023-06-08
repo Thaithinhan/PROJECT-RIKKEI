@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+}
+
+.topics-item button {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 0;
+}
+
+/* Phần business */
+.udemy-business,
+.become-instructor {
+  max-width: 896px;
+  margin: 80px auto !important;
+  display: flex;
+  justify-content: space-between;
+}
+.udemy-business .left-business img {
+  max-width: 192px;
+}
+.left-business,
+.right-business,
+.right-instructor {
+  max-width: 400px;
+}
+.udemy-business ul li {
+  list-style: disc;
+  margin-left: 20px;
+}
+.become-instructor {
+  align-items: center;
+}
+
+.active-btn {
+  color: #a436f1;
+}

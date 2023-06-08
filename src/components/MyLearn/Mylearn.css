@@ -1,0 +1,17 @@
+.list-my-learn a {
+  display: flex;
+  border: 1px solid #e4e4e4;
+  padding: 10px;
+  column-gap: 15px;
+}
+
+.list-my-learn a img {
+  width: 30%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.list-my-learn .mylearn-info .name-mylearn {
+  font-size: 12px;
+  margin-bottom: 15px !important;
+}

@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.left-top-footer ul {
+  margin-top: 30px;
+}
+
+@media screen and (min-width: 992px) {
+  .top-footer,
+  .bot-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+  .top-footer .left-top-footer {
+    column-gap: 150px;
+  }
+  .bot-footer {
+    align-items: center;
+  }
+}

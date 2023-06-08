@@ -1,0 +1,21 @@
+.list-lectures {
+  background-color: white;
+}
+
+.list-lectures ul {
+  width: 100%;
+}
+.list-lectures ul li {
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid;
+  display: flex;
+}
+.list-lectures ul li button {
+  width: 100%;
+  text-align: left;
+}
+
+.active-lec {
+  background-color: lightgrey;
+}

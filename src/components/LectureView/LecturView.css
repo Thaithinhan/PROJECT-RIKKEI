@@ -1,0 +1,14 @@
+.lecture {
+  margin: 0 0 80px 0;
+}
+
+.left-lecture {
+  flex-basis: 70%;
+}
+
+.active-tab {
+  border-bottom: 1px solid;
+}
+.right-lecture {
+  flex-basis: 30%;
+}

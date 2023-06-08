@@ -1,0 +1,8 @@
+.rating-filter,
+.topic-filter {
+  background-color: white;
+}
+
+ul li {
+  padding: 5px 0;
+}
