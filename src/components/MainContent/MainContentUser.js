@@ -16,7 +16,14 @@ const MainContentUser = () => {
     dispatch(getAll()).unwrap();
   }, [dispatch]);
 
-  const courses = useSelector((state) => state.courses);
+  const myTeach = useSelector((state) => state.myTeach);
+  // const courses = useSelector((state) => state.courses);
+
+  let listCourses = myTeach.map((courses) => courses.courseUser);
+
+  // console.log(listCourses);
+  listCourses = listCourses.flat(Infinity);
+  // console.log(listCourses);
 
   return (
     <Container>
@@ -33,12 +40,12 @@ const MainContentUser = () => {
 
       <div className="recommend-for-u my-5">
         <h2 className="fw-bold my-3">Recommended for you</h2>
-        <StudentsView courses={courses} />
+        <StudentsView courses={listCourses} />
       </div>
 
       <div className="recommend-for-u my-5">
         <h2 className="fw-bold my-3">Students are viewing</h2>
-        <StudentsView courses={courses} />
+        <StudentsView courses={listCourses} />
       </div>
     </Container>
   );

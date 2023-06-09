@@ -47,7 +47,7 @@ const StudentsView = (props) => {
         {props.courses.map((course) => (
           <SwiperSlide key={course.id}>
             <div className="list-course p-2">
-              <Link to={`/course-detail`} className="nav-link">
+              <Link to={`/course-detail/${course.id}`} className="nav-link">
                 <img
                   src={course.image}
                   alt="img-course"

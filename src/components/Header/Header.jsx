@@ -20,6 +20,16 @@ function HeaderCpmponent() {
   const [userLogin, setUserLogin] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
+  const carts = useSelector((state) => state.carts);
+  const loginUser = JSON.parse(localStorage.getItem("login-user"));
+  const findIndex = carts.findIndex(
+    (cart) => cart?.currentUser?.email === loginUser?.email
+  );
+
+  const myCard = carts[findIndex]?.courseUser
+    ? carts[findIndex].courseUser
+    : null;
+
   const dispatch = useDispatch();
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("login-user"));
@@ -94,7 +104,7 @@ function HeaderCpmponent() {
                 className="nav-link fw-bold fs-5 position-relative"
               >
                 <BsCart3 />
-                <span className="number-buy">0</span>
+                <span className="number-buy">{myCard ? myCard.length : 0}</span>
               </Link>
 
               {/* Hiển thị thông tin khi có user-login hoặc không */}

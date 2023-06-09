@@ -1,22 +1,43 @@
+import { useParams } from "react-router-dom";
 import ListLecture from "../ListLecture/ListLecture";
 import { Reviews, SearchTab, YourComment } from "../TabLecture/TabLecture";
 import "./LecturView.css";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const LectureView = () => {
   const [tab, setTab] = useState("reviews");
 
+  const courseID = useParams();
+  const listMycoure = useSelector((state) => state.checkout);
+  const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  const findIndex = listMycoure.findIndex(
+    (course) => course.currentUser?.email === userLogin?.email
+  );
+
+  const lecture = listMycoure[findIndex]?.courseUser?.find(
+    (course) => course.id === courseID.id
+  );
+
+  const listUrls = lecture?.listVideo;
+  // console.log(listUrls);
+  const [url, setUrrl] = useState(listUrls[0]);
+
+  const handleChangeurl = (value) => {
+    setUrrl(value);
+  };
+
   return (
     <div className="lecture">
       <div className="top-lecture bg-dark p-2">
-        <h5 className="text-white">Học ReactJS Từ A-Z</h5>
+        <h5 className="text-white">Khoá học: {lecture.name}</h5>
       </div>
       <div className="lecture-content d-lg-flex">
         <div className="left-lecture">
           <iframe
             width="100%"
             height="500"
-            src="https://www.youtube.com/embed/bMknfKXIFA8"
+            src={url}
             title="React Course - Beginner&#39;s Tutorial for React JavaScript Library [2022]"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           ></iframe>
@@ -59,7 +80,7 @@ const LectureView = () => {
           </div>
         </div>
         <div className="right-lecture">
-          <ListLecture />
+          <ListLecture handleChangeurl={handleChangeurl} />
         </div>
       </div>
     </div>

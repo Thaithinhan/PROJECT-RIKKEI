@@ -94,7 +94,7 @@ const LoginComponent = () => {
           onChange={handleInputChange}
         />
 
-        <input type="submit" id="btn-login" value="Sign Up" />
+        <input type="submit" id="btn-login" value="Sign In" />
 
         <button className="btn btn-none border border-dark rounded-0 signin-google">
           <FcGoogle />

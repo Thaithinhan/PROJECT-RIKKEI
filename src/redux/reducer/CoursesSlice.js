@@ -41,20 +41,38 @@ export const postCourse = createAsyncThunk(
   }
 );
 
+//Xoá khoá học trên DB
+
+// export const removeCourse = createAsyncThunk(
+//   "removeCourse/fetchCourse",
+//   async (payload) => {
+//     console.log("testId", payload);
+//     return await CourseAPI.removeCourse(payload);
+//   }
+// );
+
 const CourseSlice = createSlice({
   name: "courses",
-  initialState: [],
+  initialState: JSON.parse(localStorage.getItem("coursesLocal")) || [],
   reducers: {},
   extraReducers: {
     [getAll.fulfilled]: (state, action) => {
       return action.payload;
     },
+
     [postCourse.fulfilled]: (state, action) => {
       state.push({
         ...action.payload,
       });
+      localStorage.setItem("coursesLocal", JSON.stringify(state));
       return state;
     },
+
+    // [removeCourse.fulfilled]: (state, action) => {
+    //   const newCourses = state.filter((course) => course.id !== action.payload);
+    //   localStorage.setItem("coursesLocal", JSON.stringify(newCourses));
+    //   return newCourses;
+    // },
   },
 });
 

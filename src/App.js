@@ -11,10 +11,17 @@ import LectureViewPage from "./pages/LectureView/LectureViewPage";
 import MyteachPage from "./pages/MyTeach/MyteachPage";
 import Admin from "./pages/Admin/Admin";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UploadImage from "./components/uploadImage/UploadImage";
+import { getAll } from "./redux/reducer/CoursesSlice";
+import MyLearnPage from "./pages/MyLearn/MyLearnPage";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAll()).unwrap();
+  }, []);
   const userRedux = useSelector((state) => state.users);
   const [isCheck, setIsCheck] = useState({});
   useEffect(() => {
@@ -39,7 +46,7 @@ function App() {
           }
         />
 
-        <Route path="/courses" element={<CoursesPage />} />
+        <Route path="/courses/:category" element={<CoursesPage />} />
 
         <Route
           path="/cart"
@@ -50,10 +57,10 @@ function App() {
           }
         />
 
-        <Route path="/course-detail" element={<CourseDetailPage />} />
+        <Route path="/course-detail/:id" element={<CourseDetailPage />} />
 
         <Route
-          path="/lecture"
+          path="/lecture/:id"
           element={
             <ProtectedHome user={isCheck}>
               <LectureViewPage />
@@ -66,6 +73,14 @@ function App() {
           element={
             <ProtectedHome user={isCheck}>
               <MyteachPage />
+            </ProtectedHome>
+          }
+        />
+        <Route
+          path="/my-learn"
+          element={
+            <ProtectedHome user={isCheck}>
+              <MyLearnPage />
             </ProtectedHome>
           }
         />

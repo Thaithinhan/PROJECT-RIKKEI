@@ -36,3 +36,7 @@
 .detail-info {
   font-size: 12.5px;
 }
+
+.cart {
+  min-height: 650px;
+}

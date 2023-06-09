@@ -39,3 +39,17 @@ form select {
   align-items: center;
   column-gap: 20px;
 }
+
+.edit-btn,
+.remove-btn {
+  width: 100px;
+  margin: 0 15px 0 0;
+}
+
+.show {
+  left: 0;
+}
+
+.form-control {
+  margin: 0;
+}

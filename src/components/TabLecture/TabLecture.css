@@ -1,13 +1,13 @@
 .search-tab,
-.comment-tab {
+form.comment-tab {
   margin: 30px 0;
-  justify-content: center;
-  display: flex;
-  align-items: center;
+  justify-content: center !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .search-tab input,
-.comment-tab input {
+form.comment-tab input {
   padding: 5px;
   width: 30%;
 }
@@ -16,7 +16,7 @@
   max-width: 70%;
   margin: auto;
   padding: 20px 0;
-  justify-content: center;
+
   align-items: center;
   column-gap: 20px;
   border-bottom: 1px solid;

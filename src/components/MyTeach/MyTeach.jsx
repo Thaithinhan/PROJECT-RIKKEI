@@ -1,4 +1,5 @@
 import {
+  ModalEdit,
   MyCustomer,
   MyTeachCourse,
   TabAddNewACourse,
@@ -9,9 +10,33 @@ import React, { useState } from "react";
 
 export const MyTeach = () => {
   const [tab, setTab] = useState("add");
+  const [statusEditForm, setStatusEditForm] = useState(false);
+  const [input, setInputValue] = useState({
+    name: "",
+    desc: "",
+  });
+
+  const handleOpenEditForm = (id, name, desc) => {
+    setStatusEditForm(true);
+    setInputValue({
+      name: name,
+      desc: desc,
+      id: id,
+    });
+    // console.log(input);
+  };
+
+  const handleCloseEditForm = () => {
+    setStatusEditForm(false);
+  };
 
   return (
     <div className="teach-page">
+      <ModalEdit
+        statusEditForm={statusEditForm}
+        handleCloseEditForm={handleCloseEditForm}
+        input={input}
+      />
       <div className="btns-tabs">
         <button
           className={`btn-search-lecture btn btn-none fw-bold ${
@@ -42,7 +67,7 @@ export const MyTeach = () => {
         {tab === "add" ? (
           <TabAddNewACourse />
         ) : tab === "course" ? (
-          <MyTeachCourse />
+          <MyTeachCourse handleOpenEditForm={handleOpenEditForm} />
         ) : (
           <MyCustomer />
         )}

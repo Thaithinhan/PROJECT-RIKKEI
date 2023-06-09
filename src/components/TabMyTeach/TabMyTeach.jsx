@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./TabMyTeach.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../firebase";
 import { postCourse } from "../../redux/reducer/CoursesSlice";
 import { ToastContainer, toast } from "react-toastify";
+import {
+  addMyTeach,
+  editCourse,
+  removeCourse,
+} from "../../redux/reducer/MyTeachSlice";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 
 export const TabAddNewACourse = () => {
   const dispatch = useDispatch();
@@ -21,7 +29,7 @@ export const TabAddNewACourse = () => {
   const [video, setVideo] = useState();
   const [listVideo, setVideoList] = useState([]);
   const loginUser = JSON.parse(localStorage.getItem("login-user"));
-
+  const formRef = useRef(null);
   //Sự kiện inPUT
 
   const handleInputChange = (event) => {
@@ -84,37 +92,65 @@ export const TabAddNewACourse = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      if (inputValue.listVideo.length == 0) {
+        return toast.warn("vui lòng chờ upload video", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+      await dispatch(
+        postCourse({ ...inputValue, email: loginUser.email })
+      ).unwrap();
 
-    await dispatch(
-      postCourse({ ...inputValue, email: loginUser.email })
-    ).unwrap();
+      dispatch(addMyTeach({ inputValue, email: loginUser.email }));
 
-    toast.success("Add Course Successfull", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+      toast.success("Add Course Successfull", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
 
-    setInputValue({
-      category: "",
-      topic: "",
-      name: "",
-      author: "",
-      desc: "",
-      price: "",
-      lessonName: "",
-    });
+      setInputValue({
+        category: "",
+        topic: "",
+        name: "",
+        author: "",
+        desc: "",
+        price: "",
+        lessonName: "",
+      });
+
+      formRef.current.reset();
+    } catch (e) {
+      toast.error("Điền form đi bạn ơi", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   };
 
   return (
     <div className="add-course">
       <ToastContainer />
-      <form action="#" onSubmit={handleSubmit}>
+      <form action="#" onSubmit={handleSubmit} ref={formRef}>
         <label htmlFor="category" className="fw-bold">
           Category*
         </label>
@@ -243,85 +279,171 @@ export const TabAddNewACourse = () => {
   );
 };
 
-export const MyTeachCourse = () => {
+export const MyTeachCourse = (props) => {
+  //Xử lý render và  edit xoá khoá học
+  const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  const listCourse = useSelector((state) => state.myTeach);
+  const findIndex = listCourse.findIndex(
+    (course) => course?.buyerUser === userLogin?.email
+  );
+  const myTraingCourse = listCourse[findIndex]?.courseUser;
+  // console.log(myTraingCourse);
+
+  const dispatch = useDispatch();
+  //Handle remove Course
+  const handleremoveCourse = (id) => {
+    dispatch(removeCourse({ email: userLogin.email, id: id }));
+  };
+
+  //handle Edit
+  const handleEditCourse = (id, name, desc) => {
+    console.log(id);
+    props.handleOpenEditForm(id, name, desc);
+  };
+
   return (
     <div className="myteachcourses">
       <ul>
-        <li className="item-course">
-          <div className="show-course d-lg-flex">
-            <div className="img-course">
-              <img
-                src="https://img-c.udemycdn.com/course/240x135/8324_fa84_13.jpg"
-                alt="img-course"
-              />
-            </div>
-            <div className="course-info">
-              <h5>Tên khoá học</h5>
-              <h6>Tên tác giả</h6>
-              <h6>Thời gian cập nhật</h6>
-              <h6>đ300.000</h6>
-            </div>
-          </div>
-          <div className="actions">
-            <button className="edit-btn btn btn-primary rounded-0">Edit</button>
-            <button className="remove-btn btn btn-danger rounded-0">
-              Remove
-            </button>
-          </div>
-        </li>
-        <li className="item-course">
-          <div className="show-course d-lg-flex">
-            <div className="img-course">
-              <img
-                src="https://img-c.udemycdn.com/course/240x135/8324_fa84_13.jpg"
-                alt="img-course"
-              />
-            </div>
-            <div className="course-info">
-              <h5>Tên khoá học</h5>
-              <h6>Tên tác giả</h6>
-              <h6>Thời gian cập nhật</h6>
-              <h6>đ300.000</h6>
-            </div>
-          </div>
-          <div className="actions">
-            <button className="edit-btn btn btn-primary rounded-0">Edit</button>
-            <button className="remove-btn btn btn-danger rounded-0">
-              Remove
-            </button>
-          </div>
-        </li>
+        {myTraingCourse?.length > 0 &&
+          myTraingCourse?.map((course, index) => (
+            <li className="item-course" key={course.id}>
+              <div className="show-course d-lg-flex">
+                <div className="img-course">
+                  <img src={course.image} alt="img-course" />
+                </div>
+                <div className="course-info">
+                  <h5 className="fw-bold">{course.name}</h5>
+                  <h6>Author: {course.author}</h6>
+                  <h6>Created At: {course.createdAt}</h6>
+                  <h6>đ{Number(course.price).toLocaleString()}</h6>
+                </div>
+              </div>
+              <div className="actions">
+                <button
+                  className="edit-btn btn btn-outline-primary rounded-0"
+                  onClick={() =>
+                    handleEditCourse(course.id, course.name, course.desc)
+                  }
+                >
+                  Edit
+                </button>
+                <button
+                  className="remove-btn btn btn-outline-danger rounded-0"
+                  onClick={() => handleremoveCourse(course.id)}
+                >
+                  Remove
+                </button>
+              </div>
+            </li>
+          ))}
       </ul>
     </div>
   );
 };
 
 export const MyCustomer = () => {
+  const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  const checkoutCourse = useSelector((state) => state.checkout);
+  const listMyCourse = checkoutCourse.filter((course, index) => {
+    const course1 = course.courseUser.filter(
+      (data) => data.email === userLogin.email
+    );
+  });
+  console.log(listMyCourse);
   return (
     <div className="mycustomer">
       <ul>
-        <li className="item-customer">
-          <div className="show-customer d-lg-flex">
-            <div className="img-user">
-              <img
-                src="https://img-c.udemycdn.com/course/240x135/8324_fa84_13.jpg"
-                alt="img-course"
-              />
+        {listMyCourse.map((course) => (
+          <li className="item-customer">
+            <div className="show-customer d-lg-flex">
+              <div className="img-user">
+                <img src={course} alt="img-course" />
+              </div>
+              <div className="customer-info">
+                <h5>{course}</h5>
+                <h6>Khoá học đã mua</h6>
+                <h6>Tổng tiền các khoá: đ300.000</h6>
+              </div>
             </div>
-            <div className="customer-info">
-              <h5>Tên User</h5>
-              <h6>Khoá học đã mua</h6>
-              <h6>Tổng tiền các khoá: đ300.000</h6>
-            </div>
-          </div>
-          {/* <div className="actions">
-            <button className="edit-btn btn btn-primary rounded-0">Edit</button>
-            <button className="remove-btn btn btn-danger rounded-0">
-              Remove
-            </button>
-          </div> */}
-        </li>
+          </li>
+        ))}
       </ul>
     </div>
   );
 };
+
+// Modal Edit
+export function ModalEdit(props) {
+  const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  // const [show, setShow] = useState(props.statusEditForm);
+  // console.log(props.input);
+  const [inputValue, setInputValue] = useState({
+    name: "",
+    desc: "",
+  });
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setInputValue({
+      name: props.input.name,
+      desc: props.input.desc,
+    });
+  }, [props.input]);
+
+  const handleClose = () => {
+    props.handleCloseEditForm();
+  };
+
+  const handleEditChange = (e) => {
+    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      editCourse({ ...inputValue, email: userLogin.email, id: props.input.id })
+    );
+    handleClose();
+  };
+
+  return (
+    <Modal show={props.statusEditForm} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Modal heading</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Name Course</Form.Label>
+            <Form.Control
+              type="Text"
+              placeholder="Name Course"
+              autoFocus
+              onChange={handleEditChange}
+              name="name"
+              value={inputValue.name}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Describe Course</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              onChange={handleEditChange}
+              name="desc"
+              value={inputValue.desc}
+            />
+          </Form.Group>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal.Body>
+    </Modal>
+  );
+}

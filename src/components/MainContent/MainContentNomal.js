@@ -5,23 +5,28 @@ import { BsChevronDown } from "react-icons/bs";
 import SliderCourse from "../SliderCourses/SliderCourse";
 import Category from "../Category/Category";
 import { useDispatch, useSelector } from "react-redux";
-import { getAll } from "../../redux/reducer/CoursesSlice";
+
 import StudentsView from "../StudentView/StudentsView";
 
 const MainContentNomal = () => {
   const [topic, setTopic] = useState("HTML-CSS");
   const [filterCourses, setFilterCourses] = useState([]);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAll()).unwrap();
-  }, [dispatch]);
-
-  useEffect(() => {
-    setFilterCourses(courses.filter((course) => course.topic === topic));
-  }, [topic]);
 
   const courses = useSelector((state) => state.courses);
+  const myTeach = useSelector((state) => state.myTeach);
+
+  // const courses = useSelector((state) => state.courses);
+
+  let listCourses = myTeach.map((courses) => courses.courseUser);
+
+  // console.log(listCourses);
+  listCourses = listCourses.flat(Infinity);
+
+  // console.log(listCourses);
+
+  useEffect(() => {
+    setFilterCourses(listCourses.filter((course) => course.topic === topic));
+  }, [topic]);
 
   const handleClickButton = (value) => {
     setTopic(value);
@@ -150,7 +155,7 @@ const MainContentNomal = () => {
       </div>
       <div className="students-viewing my-5">
         <h3 className="fw-bold">Students are viewing</h3>
-        <StudentsView courses={courses} />
+        <StudentsView courses={listCourses} />
       </div>
       <div className="top-categories my-5">
         <h3 className="fw-bold">All Categories</h3>

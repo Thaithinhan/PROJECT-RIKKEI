@@ -13,10 +13,10 @@ const DropdownCatgory = (props) => {
     >
       <ul>
         <li>
-          <Link>Web Development</Link>
+          <Link to={`/courses/Web-Development`}>Web Development</Link>
         </li>
         <li>
-          <Link>Accounting & Finance</Link>
+          <Link to={`/courses/Accounting-Financial`}>Accounting & Finance</Link>
         </li>
       </ul>
     </div>
