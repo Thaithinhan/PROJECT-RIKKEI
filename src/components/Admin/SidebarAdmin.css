@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+
+.sidebar-component {
+  max-width: 250px;
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #bee3cf;
+  position: fixed;
+  top: 0;
+}
+
+.logo-img {
+  text-align: center;
+}
+.logo-img img {
+  width: 100px;
+}
+
+.btn-img img {
+  max-width: 25px;
+  height: 25px;
+  object-fit: cover;
+  margin-right: 30px;
+  background-color: transparent;
+}
+
+.active-admin {
+  color: red !important;
+}

@@ -31,8 +31,8 @@ const Course = (props) => {
     selectedCategories.includes(course.topic.toLowerCase())
   );
 
-  console.log(filteredCourses);
-  console.log(listCourses);
+  // console.log(filteredCourses);
+  // console.log(listCourses);
 
   // console.log(listCourses);
 

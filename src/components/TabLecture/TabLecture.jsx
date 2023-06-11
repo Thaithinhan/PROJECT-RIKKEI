@@ -24,12 +24,12 @@ export const SearchTab = () => {
 export const YourComment = () => {
   const idCourse = useParams();
   const dispatch = useDispatch();
-  const [inputValue, setInputvalue] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   //Handle input Change
 
   const handleInputChange = debounce((e) => {
-    setInputvalue(e.target.value);
+    setInputValue(e.target.value);
   }, 1000);
 
   // console.log(inputValue);
@@ -45,7 +45,7 @@ export const YourComment = () => {
         content_comment: inputValue,
       })
     ).unwrap();
-    setInputvalue("");
+    setInputValue("");
   };
 
   return (
@@ -56,6 +56,7 @@ export const YourComment = () => {
           name="input-lecture"
           placeholder="Enter your comment"
           onChange={handleInputChange}
+          // value={inputValue}
         />
         <button className="btn btn-dark rounded-0" type="submit">
           Post your comment

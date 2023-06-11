@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./Signup.css";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/reducer/UsersSlice";
@@ -42,6 +42,10 @@ const Signup = () => {
         email: "",
         password: "",
       });
+
+      setTimeout(() => {
+        return <Navigate to="/login" replace />;
+      }, 4000);
     } catch (err) {
       toast.error(err.message, {
         position: "top-right",

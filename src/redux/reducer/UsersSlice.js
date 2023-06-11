@@ -22,9 +22,20 @@ export const login = createAsyncThunk("login/fetchAuth", async (payload) => {
   return res;
 });
 
+//Get User
+
+export const getUser = createAsyncThunk(
+  "getUser/fetchAuth",
+  async (payload) => {
+    const res = await UserAPI.getUser(payload);
+    // console.log(res);
+    return res;
+  }
+);
+
 const UserSlice = createSlice({
   name: "users",
-  initialState: {
+  initialState: JSON.parse(localStorage.getItem("login-user")) || {
     email: "",
     fullname: "",
     image: "",
@@ -50,6 +61,11 @@ const UserSlice = createSlice({
     [login.fulfilled]: (state, action) => {
       // console.log(action.payload)
       return (state = action.payload.user);
+    },
+
+    [getUser.fulfilled]: (state, action) => {
+      // console.log(action.payload);
+      return action.payload;
     },
   },
 });

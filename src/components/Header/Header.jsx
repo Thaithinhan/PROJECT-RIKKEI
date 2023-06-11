@@ -31,8 +31,9 @@ function HeaderCpmponent() {
     : null;
 
   const dispatch = useDispatch();
+
+  const user = JSON.parse(localStorage.getItem("login-user"));
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("login-user"));
     setUserLogin(user);
   }, [userRedux]);
 
@@ -47,6 +48,9 @@ function HeaderCpmponent() {
     const action = dispatch(logout());
     action && navigate("/login");
   };
+
+  // console.log(" redux", userRedux);
+  // console.log("  local", userLogin);
 
   return (
     <Navbar bg="light" expand="lg">
@@ -106,28 +110,8 @@ function HeaderCpmponent() {
                 <BsCart3 />
                 <span className="number-buy">{myCard ? myCard.length : 0}</span>
               </Link>
-
               {/* Hiển thị thông tin khi có user-login hoặc không */}
-              {userLogin !== null ? (
-                <>
-                  <Link
-                    to="/list-wish"
-                    className="nav-link fw-bold fs-5 list-wish"
-                  >
-                    <AiOutlineHeart />
-                  </Link>
-                  <Link to="/user" className="nav-link user">
-                    <img src={userRedux.image} alt="avt-user" />
-                  </Link>
-                  <Link
-                    // to="/"
-                    className="btn btn-outline-dark rounded-0 fw-bold logout-btn"
-                    onClick={handleLogout}
-                  >
-                    Log out
-                  </Link>
-                </>
-              ) : (
+              {userLogin === null ? (
                 <>
                   <Link
                     to="/login"
@@ -142,10 +126,29 @@ function HeaderCpmponent() {
                     Sign up
                   </Link>
                 </>
+              ) : (
+                <>
+                  <Link
+                    to="/list-wish"
+                    className="nav-link fw-bold fs-5 list-wish"
+                  >
+                    <AiOutlineHeart />
+                  </Link>
+                  <Link to="/user" className="nav-link user">
+                    <img
+                      src={userRedux.image ? userRedux.image : loginUser?.image}
+                      alt="avt-user"
+                    />
+                  </Link>
+                  <Link
+                    // to="/"
+                    className="btn btn-outline-dark rounded-0 fw-bold logout-btn"
+                    onClick={handleLogout}
+                  >
+                    Log out
+                  </Link>
+                </>
               )}
-
-              {/*
-               */}
             </div>
           </Form>
         </div>

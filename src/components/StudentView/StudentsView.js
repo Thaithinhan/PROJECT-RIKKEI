@@ -54,7 +54,7 @@ const StudentsView = (props) => {
                   className="img-course"
                 />
                 <p className="fw-bold name-course mb-0">{course.name}</p>
-                <p className="author text-secondary m-0">Author</p>
+                <p className="author text-secondary m-0">{course.author}</p>
               </Link>
               <div className="rating-course m-0 text-warning">
                 <span className="fw-bold me-2">5</span>

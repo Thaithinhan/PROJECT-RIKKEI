@@ -16,6 +16,7 @@ const MainContentUser = () => {
     dispatch(getAll()).unwrap();
   }, [dispatch]);
 
+  const userLogin = JSON.parse(localStorage.getItem("login-user"));
   const myTeach = useSelector((state) => state.myTeach);
   // const courses = useSelector((state) => state.courses);
 
@@ -29,7 +30,9 @@ const MainContentUser = () => {
     <Container>
       <div className="my-learning my-5">
         <div className="link-my-learn d-lg-flex align-items-center justify-content-between">
-          <h2 className="fw-bold m-0">Let's start learning, Thi Nhan</h2>
+          <h2 className="fw-bold m-0">
+            Let's start learning, {userLogin?.fullname}
+          </h2>
           <Link to={"/my-learn"} className="my-learn-link fw-bold">
             My Learn
           </Link>

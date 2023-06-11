@@ -1,0 +1,26 @@
+.top-tabListUserAdmin {
+  border-bottom: 1px solid;
+}
+.top-tabListUserAdmin input {
+  width: 250px;
+  padding: 15px 40px !important;
+  position: relative;
+  border-bottom: 1px solid #6fd3b8 !important;
+}
+
+.btn-search {
+  position: absolute;
+  left: 0;
+  top: 5px;
+}
+
+.show-user ul li {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  justify-content: space-between;
+  border-bottom: 0.5px solid #7b7878;
+}
+.avt-img img {
+  max-width: 70px;
+}

@@ -67,10 +67,41 @@ const MyTeachSlice = createSlice({
       localStorage.setItem("myTeach", JSON.stringify(state));
       return state;
     },
+
+    editCourseByAdmin: (state, action) => {
+      console.log(action.payload);
+      const myTeach = state[action.payload.indexCourse].courseUser;
+      const newData = myTeach.map((teach) => {
+        if (teach.id === action.payload.id) {
+          teach.name = action.payload.inputValue.name;
+          teach.desc = action.payload.inputValue.desc;
+        }
+        return teach;
+      });
+      state[action.payload.indexCourse].courseUser = [...newData];
+      localStorage.setItem("myTeach", JSON.stringify(state));
+      return state;
+    },
+
+    removeCourseByAdmin: (state, action) => {
+      const { index, id } = action.payload;
+      // console.log(index);
+      const myTeach = state[index].courseUser;
+      const newData = myTeach.filter((teach) => teach.id !== id);
+      state[index].courseUser = [...newData];
+      localStorage.setItem("myTeach", JSON.stringify(state));
+      return state;
+    },
   },
 });
 
 const { actions, reducer } = MyTeachSlice;
-export const { addMyTeach, removeCourse, editCourse } = actions;
+export const {
+  addMyTeach,
+  removeCourse,
+  editCourse,
+  editCourseByAdmin,
+  removeCourseByAdmin,
+} = actions;
 
 export default reducer;

@@ -1,13 +1,18 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ListLecture from "../ListLecture/ListLecture";
 import { Reviews, SearchTab, YourComment } from "../TabLecture/TabLecture";
 import "./LecturView.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 const LectureView = () => {
   const [tab, setTab] = useState("reviews");
+  const [isCheck, isChecked] = useState(true);
+  const navigate = useNavigate();
 
+  const courses = useSelector((state) => state.myTeach);
+  const getAllCourse = courses.map((course) => course.courseUser).flat();
   const courseID = useParams();
   const listMycoure = useSelector((state) => state.checkout);
   const userLogin = JSON.parse(localStorage.getItem("login-user"));
@@ -22,6 +27,21 @@ const LectureView = () => {
   const listUrls = lecture?.listVideo;
   // console.log(listUrls);
   const [url, setUrrl] = useState(listUrls[0]);
+
+  if (!getAllCourse.find((course) => course.id === courseID.id)) {
+    toast.error("This courser is not available", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+    return <ToastContainer />;
+  }
 
   const handleChangeurl = (value) => {
     setUrrl(value);

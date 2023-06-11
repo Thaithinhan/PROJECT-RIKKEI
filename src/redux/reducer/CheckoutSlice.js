@@ -22,7 +22,10 @@ const CheckoutSlice = createSlice({
           courseUser: [...action.payload.course],
         });
       } else {
-        state[findUser].courseUser.push(...action.payload.course);
+        state[findUser].courseUser = [
+          ...state[findUser].courseUser,
+          ...action.payload.course,
+        ];
       }
       // console.log(action);
       localStorage.setItem("checkout", JSON.stringify(state));

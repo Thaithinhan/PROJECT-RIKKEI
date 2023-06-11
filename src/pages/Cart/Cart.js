@@ -1,11 +1,17 @@
 import React from "react";
 import Cart from "../../components/Cart/Cart";
+import HeaderCpmponent from "../../components/Header/Header";
+import FooterComponent from "../../components/Footer/FooterComponent";
 
 const CartPage = () => {
   return (
-    <div>
-      <Cart />
-    </div>
+    <>
+      <HeaderCpmponent />
+      <div>
+        <Cart />
+      </div>
+      <FooterComponent />
+    </>
   );
 };
 

@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+.course-img img {
+  width: 200px;
+  height: 120px;
+  margin-right: 20px;
+}
+
+.list-course li {
+  padding: 15px 0;
+  border-bottom: 1px solid #7b7878;
+}

@@ -3,6 +3,7 @@ import reducerCheckout from "./CheckoutSlice";
 import reducerComment from "./CommentSlice";
 import reducerCourse from "./CoursesSlice";
 import reducerMyTeach from "./MyTeachSlice";
+import reducerOrder from "./OrderSlide";
 import reducerUsers from "./UsersSlice";
 
 const rootReducer = {
@@ -12,6 +13,7 @@ const rootReducer = {
   checkout: reducerCheckout,
   myTeach: reducerMyTeach,
   comment: reducerComment,
+  order: reducerOrder,
 };
 
 export default rootReducer;

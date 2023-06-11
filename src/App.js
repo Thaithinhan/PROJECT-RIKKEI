@@ -9,12 +9,13 @@ import CourseDetailPage from "./pages/Course/CourseDetailPage";
 import CartPage from "./pages/Cart/Cart";
 import LectureViewPage from "./pages/LectureView/LectureViewPage";
 import MyteachPage from "./pages/MyTeach/MyteachPage";
-import Admin from "./pages/Admin/Admin";
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UploadImage from "./components/uploadImage/UploadImage";
 import { getAll } from "./redux/reducer/CoursesSlice";
 import MyLearnPage from "./pages/MyLearn/MyLearnPage";
+import Admin from "./pages/Admin/Admin";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,16 +24,27 @@ function App() {
     dispatch(getAll()).unwrap();
   }, []);
   const userRedux = useSelector((state) => state.users);
-  const [isCheck, setIsCheck] = useState({});
+  const users = JSON.parse(localStorage.getItem("login-user"));
+  const [isCheck, setIsCheck] = useState(users);
+  const [isCurrentPageAdmin, setCurrentPageAdmin] = useState(false);
+  const [isCheckAdmin, setIsCheckAdmin] = useState(false);
+
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("login-user"));
+    const user = users;
     setIsCheck(user);
   }, [userRedux]);
 
+  useEffect(() => {
+    if (window.location.pathname.includes("/admin")) {
+      setIsCheckAdmin(true);
+    }
+    if (isCheckAdmin) {
+      setCurrentPageAdmin(true);
+    }
+  }, [isCheckAdmin]);
+
   return (
     <div className="App">
-      <HeaderCpmponent />
-
       {/* Chuyển hướng */}
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -89,12 +101,12 @@ function App() {
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/uploadImg" element={<UploadImage />}></Route>
       </Routes>
-      <FooterComponent />
     </div>
   );
 }
 
 function ProtectedAdmin({ user, children }) {
+  // console.log("user protected ===>", user);
   if (user?.email === "admin@gmail.com") {
     return children;
   }

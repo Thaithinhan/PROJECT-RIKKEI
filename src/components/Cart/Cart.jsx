@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart, removeCartOrder } from "../../redux/reducer/CartsSlice";
 import { addToCheckout } from "../../redux/reducer/CheckoutSlice";
+import { addOrder } from "../../redux/reducer/OrderSlide";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const carts = useSelector((state) => state.carts);
   const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  const [selectedProducts, setSelectedProducts] = useState([]);
   const findIndex = carts.findIndex(
     (cart) => cart?.currentUser.email === userLogin.email
   );
@@ -28,7 +30,6 @@ const Cart = () => {
   //Tính tổng tiền
   let totalMoney = 0;
   //Tạo biến lưu các sản phẩm đã chọn
-  const [selectedProducts, setSelectedProducts] = useState([]);
 
   //Handle Choose Product to Checkout
   const handleChooseProducts = (e, cart) => {
@@ -48,9 +49,13 @@ const Cart = () => {
     dispatch(
       addToCheckout({ course: selectedProducts, currentUser: userLogin })
     );
+
+    dispatch(addOrder({ courses: selectedProducts, currentUser: userLogin }));
+
     selectedProducts.forEach((course) => {
       dispatch(removeCartOrder({ id: course.id, currentUser: userLogin }));
     });
+    setSelectedProducts([]);
   };
 
   return (

@@ -1,13 +1,19 @@
 import React from "react";
 import LectureView from "../../components/LectureView/LectureView";
-import ListLecture from "../../components/ListLecture/ListLecture";
+
 import "./LectureViewPage.css";
+import HeaderCpmponent from "../../components/Header/Header";
+import FooterComponent from "../../components/Footer/FooterComponent";
 
 export const LectureViewPage = () => {
   return (
-    <div className="lectures">
-      <LectureView />
-    </div>
+    <>
+      <HeaderCpmponent />
+      <div className="lectures">
+        <LectureView />
+      </div>
+      <FooterComponent />
+    </>
   );
 };
 export default LectureViewPage;

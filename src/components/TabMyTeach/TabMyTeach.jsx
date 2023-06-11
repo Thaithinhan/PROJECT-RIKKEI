@@ -93,6 +93,39 @@ export const TabAddNewACourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      //Validate form
+
+      // Kiểm tra các ô input type text có đủ 8 ký tự hay không
+      if (
+        inputValue.topic.length < 5 ||
+        inputValue.name.length < 5 ||
+        inputValue.author.length < 5 ||
+        inputValue.desc.length < 5 ||
+        inputValue.price.length < 5 ||
+        inputValue.lessonName.length < 5
+      ) {
+        return toast.error("Please input at least 8 characters");
+      }
+
+      // Kiểm tra các ô input không được bỏ trống
+      if (
+        inputValue.category === "" ||
+        inputValue.topic === "" ||
+        inputValue.name === "" ||
+        inputValue.author === "" ||
+        inputValue.desc === "" ||
+        inputValue.price === "" ||
+        inputValue.lessonName === ""
+      ) {
+        return toast.error("Please input all the fields");
+      }
+
+      // Kiểm tra ô input type file đã được điền hay chưa
+      if (!inputValue.image || !inputValue.preVideo || !inputValue.listVideo) {
+        return toast.error("Please Input File");
+      }
+
+      // Check to wait upload video
       if (inputValue.listVideo.length == 0) {
         return toast.warn("vui lòng chờ upload video", {
           position: "top-right",
@@ -134,9 +167,9 @@ export const TabAddNewACourse = () => {
 
       formRef.current.reset();
     } catch (e) {
-      toast.error("Điền form đi bạn ơi", {
+      toast.error("Please fulfill the form", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

@@ -1,0 +1,31 @@
+.top-tabListOrderAdmin {
+  border-bottom: 1px solid;
+}
+.top-tabListOrderAdmin input {
+  width: 250px;
+  padding: 15px 40px !important;
+  position: relative;
+  border-bottom: 1px solid #6fd3b8 !important;
+}
+
+.btn-search {
+  position: absolute;
+  left: 0;
+  top: 5px;
+}
+
+.show-order ul li {
+  display: flex !important;
+  align-items: center;
+  padding: 20px 0;
+  justify-content: space-between;
+  border-bottom: 0.5px solid #7b7878;
+}
+
+.order-course-img img {
+  width: 170px;
+  height: 100px;
+  object-fit: cover;
+  border: 0.5px solid #7b7878;
+  margin-right: 15px;
+}

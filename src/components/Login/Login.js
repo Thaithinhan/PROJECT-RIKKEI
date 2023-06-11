@@ -4,7 +4,6 @@ import { FcGoogle } from "react-icons/fc";
 import "./Login.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/reducer/UsersSlice";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,17 +13,18 @@ const LoginComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [userLogin, setUserLogin] = useState(null);
+  const dataUser = JSON.parse(localStorage.getItem("login-user"));
+  const [userLogin, setUserLogin] = useState({});
 
   useEffect(() => {
-    const loginUser = JSON.parse(localStorage.getItem("login-user"));
+    const loginUser = dataUser;
     setUserLogin(loginUser);
   }, [user]);
 
   // console.log(users);
 
   //Handle Onchange Input
-
+  console.log(dataUser);
   const handleInputChange = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
@@ -33,8 +33,8 @@ const LoginComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await dispatch(login(inputValue)).unwrap();
-      data &&
+      await dispatch(login(inputValue)).unwrap();
+      user &&
         toast.success("Login Successfull", {
           position: "top-right",
           autoClose: 3000,
@@ -47,12 +47,12 @@ const LoginComponent = () => {
         });
 
       setTimeout(() => {
-        if (data && userLogin && userLogin.email === "admin@gmail.com") {
+        if (inputValue?.email === "admin@gmail.com") {
           navigate("/admin");
         } else {
           navigate("/");
         }
-      }, 3000);
+      }, 2000);
     } catch (err) {
       console.log(err);
       toast.error(err.message, {
@@ -73,7 +73,7 @@ const LoginComponent = () => {
       <ToastContainer />
       <h5 className="fw-bold">Log in to your Udemy account</h5>
       <div className="logout-user">
-        <img src={user.image} alt="avt" />
+        <img src={user.image ? user.image : userLogin?.image} alt="avt" />
         <p className="text-secondary user-name-logout">
           Welcome back, {user.fullname}
         </p>

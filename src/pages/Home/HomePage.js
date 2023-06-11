@@ -3,11 +3,23 @@ import Banner from "../../components/Banners/Banner";
 import MainContentNomal from "../../components/MainContent/MainContentNomal";
 import MainContentUser from "../../components/MainContent/MainContentUser";
 import Nav from "../../components/Nav/Nav";
+import { useNavigate } from "react-router-dom";
+import HeaderCpmponent from "../../components/Header/Header";
+import FooterComponent from "../../components/Footer/FooterComponent";
+import { ToastContainer } from "react-bootstrap";
 
 const HomePage = () => {
   const [url, setUrl] = useState(null);
   const [isCheck, setIssCheck] = useState(false);
-
+  const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (userLogin && userLogin.email === "admin@gmail.com") {
+  //     navigate("/admin");
+  //   } else {
+  //     navigate("/");
+  //   }
+  // }, []);
   // localStorage.setItem(
   //   "login-user",
   //   JSON.stringify({ username: "Nhanthai123" })
@@ -31,15 +43,20 @@ const HomePage = () => {
   }, [isCheck]);
 
   return (
-    <div>
-      {JSON.parse(localStorage.getItem("login-user")) && <Nav />}
-      <Banner url={url} />
-      {JSON.parse(localStorage.getItem("login-user")) ? (
-        <MainContentUser />
-      ) : (
-        <MainContentNomal />
-      )}
-    </div>
+    <>
+      <ToastContainer />
+      <HeaderCpmponent />
+      <div>
+        {JSON.parse(localStorage.getItem("login-user")) && <Nav />}
+        <Banner url={url} />
+        {JSON.parse(localStorage.getItem("login-user")) ? (
+          <MainContentUser />
+        ) : (
+          <MainContentNomal />
+        )}
+      </div>
+      <FooterComponent />
+    </>
   );
 };
 

@@ -1,11 +1,17 @@
 import React from "react";
 import CourseDetail from "../../components/CourseDetail/CourseDetail";
+import HeaderCpmponent from "../../components/Header/Header";
+import FooterComponent from "../../components/Footer/FooterComponent";
 
 const CourseDetailPage = () => {
   return (
-    <div>
-      <CourseDetail />
-    </div>
+    <>
+      <HeaderCpmponent />
+      <div>
+        <CourseDetail />
+      </div>
+      <FooterComponent />
+    </>
   );
 };
 
