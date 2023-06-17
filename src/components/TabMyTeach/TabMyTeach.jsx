@@ -95,18 +95,6 @@ export const TabAddNewACourse = () => {
     try {
       //Validate form
 
-      // Kiểm tra các ô input type text có đủ 8 ký tự hay không
-      if (
-        inputValue.topic.length < 5 ||
-        inputValue.name.length < 5 ||
-        inputValue.author.length < 5 ||
-        inputValue.desc.length < 5 ||
-        inputValue.price.length < 5 ||
-        inputValue.lessonName.length < 5
-      ) {
-        return toast.error("Please input at least 8 characters");
-      }
-
       // Kiểm tra các ô input không được bỏ trống
       if (
         inputValue.category === "" ||
@@ -118,6 +106,18 @@ export const TabAddNewACourse = () => {
         inputValue.lessonName === ""
       ) {
         return toast.error("Please input all the fields");
+      }
+
+      // Kiểm tra các ô input type text có đủ 6 ký tự hay không
+      if (
+        inputValue.topic.length < 6 ||
+        inputValue.name.length < 6 ||
+        inputValue.author.length < 6 ||
+        inputValue.desc.length < 6 ||
+        inputValue.price.length < 6 ||
+        inputValue.lessonName.length < 6
+      ) {
+        return toast.error("Please input all fields at least 5 characters");
       }
 
       // Kiểm tra ô input type file đã được điền hay chưa
@@ -184,7 +184,7 @@ export const TabAddNewACourse = () => {
     <div className="add-course">
       <ToastContainer />
       <form action="#" onSubmit={handleSubmit} ref={formRef}>
-        <label htmlFor="category" className="fw-bold">
+        <label htmlFor="category" className="fw-bold text-danger">
           Category*
         </label>
         <select
@@ -198,7 +198,7 @@ export const TabAddNewACourse = () => {
           <option value="webdevelopment">Web Development</option>
           <option value="accounting">Accounting & Financial</option>
         </select>
-        <label htmlFor="topic-course" className="fw-bold">
+        <label htmlFor="topic-course" className="fw-bold text-danger">
           Topic Course*
         </label>
         <input
@@ -210,7 +210,7 @@ export const TabAddNewACourse = () => {
           onChange={handleInputChange}
           value={inputValue.topic}
         />
-        <label htmlFor="name-course" className="fw-bold">
+        <label htmlFor="name-course" className="fw-bold text-danger">
           Name Course*
         </label>
         <input
@@ -222,7 +222,7 @@ export const TabAddNewACourse = () => {
           onChange={handleInputChange}
           value={inputValue.name}
         />
-        <label htmlFor="author-course" className="fw-bold">
+        <label htmlFor="author-course" className="fw-bold text-danger">
           Author Course*
         </label>
         <input
@@ -234,7 +234,7 @@ export const TabAddNewACourse = () => {
           onChange={handleInputChange}
           value={inputValue.author}
         />
-        <label htmlFor="describe-course" className="fw-bold">
+        <label htmlFor="describe-course" className="fw-bold text-danger">
           Describe Course*
         </label>
         <input
@@ -246,7 +246,7 @@ export const TabAddNewACourse = () => {
           onChange={handleInputChange}
           value={inputValue.desc}
         />
-        <label htmlFor="price-course" className="fw-bold">
+        <label htmlFor="price-course" className="fw-bold text-danger">
           Price Course*
         </label>
         <input
@@ -258,7 +258,7 @@ export const TabAddNewACourse = () => {
           onChange={handleInputChange}
           value={inputValue.price}
         />
-        <label htmlFor="img-course" className="fw-bold">
+        <label htmlFor="img-course" className="fw-bold text-danger">
           Image Course*
         </label>
         <input
@@ -268,7 +268,7 @@ export const TabAddNewACourse = () => {
           accept="image/*"
           onChange={handleImageChange}
         />
-        <label htmlFor="video-course" className="fw-bold">
+        <label htmlFor="video-course" className="fw-bold text-danger">
           Preview Video*
         </label>
         <input
@@ -278,7 +278,7 @@ export const TabAddNewACourse = () => {
           accept="video/*"
           onChange={handlePrevVideoChange}
         />
-        <label htmlFor="name-lesson" className="fw-bold">
+        <label htmlFor="name-lesson" className="fw-bold text-danger">
           Name Lesson*
         </label>
         <input
@@ -290,7 +290,7 @@ export const TabAddNewACourse = () => {
           onChange={handleInputChange}
           value={inputValue.lessonName}
         />
-        <label htmlFor="video-lesson" className="fw-bold">
+        <label htmlFor="video-lesson" className="fw-bold text-danger">
           Video Lesson*
         </label>
         <input

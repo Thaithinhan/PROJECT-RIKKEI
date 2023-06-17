@@ -96,10 +96,10 @@ const LoginComponent = () => {
 
         <input type="submit" id="btn-login" value="Sign In" />
 
-        <button className="btn btn-none border border-dark rounded-0 signin-google">
+        {/* <button className="btn btn-none border border-dark rounded-0 signin-google">
           <FcGoogle />
           <span className="fw-bold">Continue with Google</span>
-        </button>
+        </button> */}
         <div className="clear"></div>
       </form>
       <p>

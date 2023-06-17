@@ -29,7 +29,7 @@ const Signup = () => {
       result &&
         toast.success("Register Successfull", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -45,7 +45,7 @@ const Signup = () => {
 
       setTimeout(() => {
         return <Navigate to="/login" replace />;
-      }, 4000);
+      }, 2000);
     } catch (err) {
       toast.error(err.message, {
         position: "top-right",
