@@ -1,0 +1,13 @@
+const router = require('express').Router();
+const tweetController = require('../controllers/tweetController');
+const userMiddleware = require('../middlewares/userMiddleware');
+const upload = require('../middlewares/multerMiddleware');
+
+//MAKE NEW TWEET
+router.post('/', userMiddleware.authMiddleware, upload.array('images', 3), tweetController.createTweet);
+router.get('/mytweet', userMiddleware.authMiddleware, tweetController.getTweetForCurrentUser);
+router.get('/getTweetByTime', userMiddleware.authMiddleware, tweetController.getAllTweetByTime);
+router.get('/user/:id', tweetController.getAllTweetByIdUser);
+router.get('/:id', tweetController.getTweetByIdTweet);
+
+module.exports = router;
