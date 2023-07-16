@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import "./PostDetailComponent.css";
-import DropdownComponent from "../Dropdown/DropdownComponent";
 import Tweet from "../Tweet/Tweet";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getCommentByTweetId } from "../../redux/reducer/commentSlice";
 
 const PostDetailComponent = () => {
   const [showComment, setShowComment] = useState(true);
   const [tweetParent, setTweetParent] = useState();
+  const [comments, setComments] = useState([]);
+  const [subComments, setSubComment] = useState({});
+  const [tweets, setTweets] = useState([]);
   const params = useParams();
   const idTweet = params.id;
+  const dispatch = useDispatch();
 
   //Lấy dữ liệu tweet theo ID
   const getTweetByIdTweet = async (id) => {
@@ -22,21 +27,82 @@ const PostDetailComponent = () => {
     }
   };
 
+  //Lấy dữ liệu commnet theo comment chính
+  const getSubCommentsByCommentId = async (commentId) => {
+    try {
+      const data = await dispatch(getCommentByTweetId(commentId)).unwrap();
+      setSubComment((prev) => ({
+        ...prev,
+        [commentId]: data,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Lấy comment theo IDtweet
+
+  const getCommentOfCurrentTweet = async (id) => {
+    try {
+      const data = await dispatch(getCommentByTweetId(id)).unwrap();
+      setComments(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getTweetByIdTweet(idTweet);
-  }, [idTweet]);
+    getCommentOfCurrentTweet(idTweet);
+  }, [idTweet, tweets]);
+
+  useEffect(() => {
+    if (comments.length > 0) {
+      comments.forEach((comment) => getSubCommentsByCommentId(comment._id));
+    }
+  }, [comments, tweets]);
 
   return (
     <div className="post-detail-component">
       <h4 className="p-2 fw-bold">Tweets</h4>
       <div className="post-detail-header">
-        <Tweet tweet={tweetParent} />
+        <Tweet
+          tweet={tweetParent}
+          setTweetParent={setTweetParent}
+          setTweets={setTweets}
+        />
       </div>
-      <div className="list-comments">
-        <h6 onClick={() => setShowComment(!showComment)}>
+      <div className="list-comments my-4">
+        <h6 onClick={() => setShowComment(!showComment)} className="fw-bold">
           <b>{showComment ? "Hidden comments" : "Show comments"}</b>
         </h6>
-        {showComment && <Tweet />}
+        <div className="show-list-comment">
+          {" "}
+          {showComment &&
+            comments.map((comment) => (
+              <>
+                <Tweet
+                  key={comment._id}
+                  tweet={comment}
+                  setComments={setComments}
+                  comments={comments}
+                  setTweets={setTweets}
+                />
+                {subComments[comment._id] &&
+                  subComments[comment._id].map((subcomment) => (
+                    <div className="sub-comment">
+                      <Tweet
+                        key={subcomment._id}
+                        tweet={subcomment}
+                        setComments={setComments}
+                        comments={comments}
+                        setTweets={setTweets}
+                      />
+                    </div>
+                  ))}
+              </>
+            ))}
+        </div>
       </div>
     </div>
   );

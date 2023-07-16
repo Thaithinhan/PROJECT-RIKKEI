@@ -36,3 +36,10 @@
 .post-detail-component h6 {
   cursor: pointer;
 }
+
+.post-detail-component .sub-comment {
+  margin-left: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: rgb(244, 244, 244);
+}

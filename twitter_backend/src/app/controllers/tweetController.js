@@ -36,7 +36,9 @@ const getTweetForCurrentUser = async (req, res) => {
 
   try {
     // Lấy danh sách tweet của người dùng hiện tại dựa trên userId
-    const tweets = await Tweet.find({ userId_tweet: userId }).sort('-createdAt').populate('userId_tweet');
+    const tweets = await Tweet.find({ userId_tweet: userId, type: 'tweet' })
+      .sort('-createdAt')
+      .populate('userId_tweet');
 
     res.status(200).json({ success: true, tweets });
   } catch (error) {
@@ -61,7 +63,10 @@ const getAllTweetByTime = async (req, res) => {
     // Lấy các tweets của người dùng hiện tại và những người mà họ đang theo dõi,
     // hoặc các tweet có lượt like trên 50, sắp xếp theo thời gian tạo (mới nhất)
     const tweets = await Tweet.find({
-      $or: [{ userId_tweet: { $in: followingIds } }, { likes: { $gt: 50 } }],
+      $or: [
+        { userId_tweet: { $in: followingIds }, type: 'tweet' },
+        { likes: { $gt: 50 }, type: 'tweet' },
+      ],
     })
       .sort('-createdAt')
       .populate('userId_tweet');
@@ -78,7 +83,9 @@ const getAllTweetByIdUser = async (req, res) => {
 
   try {
     // Tìm kiếm tất cả các tweets của một người dùng dựa trên userId được cung cấp
-    const tweets = await Tweet.find({ userId_tweet: userId }).sort('-createdAt').populate('userId_tweet');
+    const tweets = await Tweet.find({ userId_tweet: userId, type: 'tweet' })
+      .sort('-createdAt')
+      .populate('userId_tweet');
 
     res.status(200).json({ success: true, tweets });
   } catch (error) {
@@ -105,4 +112,54 @@ const getTweetByIdTweet = async (req, res) => {
   }
 };
 
-module.exports = { createTweet, getTweetForCurrentUser, getAllTweetByTime, getAllTweetByIdUser, getTweetByIdTweet };
+//DELETE TWEET THEO ID TWEET
+const deleteById = async (req, res) => {
+  const tweetId = req.params.id; // Lấy id từ parameters
+
+  try {
+    // Tìm và xóa tweet dựa trên id
+    const deletedTweet = await Tweet.findByIdAndRemove(tweetId);
+
+    // Kiểm tra nếu không tìm thấy tweet
+    if (!deletedTweet) {
+      return res.status(404).json({ success: false, message: 'Tweet not found' });
+    }
+    res.status(200).json({ success: true, message: 'Tweet deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to delete tweet', error });
+  }
+};
+
+//EDIT TWEET BY ID TWEET
+const editTweetById = async (req, res) => {
+  const tweetId = req.params.id; // Lấy id từ parameters
+
+  const { content } = req.body; // Lấy nội dung mới từ body
+
+  try {
+    // Tìm và cập nhật tweet dựa trên id
+    const updatedTweet = await Tweet.findByIdAndUpdate(
+      tweetId,
+      { content }, // Cập nhật các trường này
+      { new: true } // Option này trả về document sau khi đã được cập nhật
+    );
+
+    // Kiểm tra nếu không tìm thấy tweet
+    if (!updatedTweet) {
+      return res.status(404).json({ success: false, message: 'Tweet not found' });
+    }
+    res.status(200).json({ success: true, message: 'Tweet updated successfully', tweet: updatedTweet });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to update tweet', error });
+  }
+};
+
+module.exports = {
+  createTweet,
+  getTweetForCurrentUser,
+  getAllTweetByTime,
+  getAllTweetByIdUser,
+  getTweetByIdTweet,
+  deleteById,
+  editTweetById,
+};

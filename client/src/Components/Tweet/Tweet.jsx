@@ -8,13 +8,16 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import DropdownComponent from "../Dropdown/DropdownComponent";
 import { useDispatch } from "react-redux";
 import moment from "moment"; // Import thư viện moment
+import CommentForm from "../CommentForm/CommentForm";
 
-const Tweet = ({ tweet }) => {
-  const location = useLocation();
-  const params = useParams();
-  const id = params?.id;
-  const dispatch = useDispatch();
+const Tweet = ({ tweet, setTweets, setTweetParent, setComments, comments }) => {
+  // const location = useLocation();
+  // const params = useParams();
+  // const id = params?.id;
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  const [isCheckFollowing, setIsCheckFollowing] = useState(false);
 
   // Hàm hỗ trợ để định dạng thời gian đăng bài post
   const formatTimestamp = (timestamp) => {
@@ -48,10 +51,18 @@ const Tweet = ({ tweet }) => {
     e.stopPropagation();
   };
 
+  //Phần comment
+  const [showCommentForm, setShowCommentForm] = useState(false);
+
+  const handleCommentClick = (e) => {
+    e.stopPropagation();
+    setShowCommentForm(!showCommentForm);
+  };
+
   return (
-    <div className="tweet nav-link" onClick={() => handleNavigate(tweet._id)}>
+    <div className="tweet nav-link" onClick={() => handleNavigate(tweet?._id)}>
       <div className="tweet-header">
-        <div className="tweet-info nav-link">
+        <div className="tweet-info nav-link d-flex - align-items-center">
           <Link
             to={`/profile/${tweet?.userId_tweet?._id}`}
             onClick={handleLinkClick}
@@ -63,14 +74,24 @@ const Tweet = ({ tweet }) => {
               className="avatar"
             />
           </Link>
-
-          <span className="fullname">{tweet?.userId_tweet?.fullname}</span>
-          <span className="username mx-2">
-            @{tweet?.userId_tweet?.username}
-          </span>
-          <span className="timestamp">{formatTimestamp(tweet?.createdAt)}</span>
+          <p className="m-0">
+            <span className="fullname">{tweet?.userId_tweet?.fullname}</span>{" "}
+            <p className="username my-0">@{tweet?.userId_tweet?.username}</p>
+            <span className="timestamp">
+              {formatTimestamp(tweet?.createdAt)}
+            </span>
+          </p>
         </div>
-        <DropdownComponent />
+        <DropdownComponent
+          isUserTweet={tweet?.userId_tweet?._id === userLogin?._id}
+          isFollowing={isCheckFollowing}
+          setIsCheckFollowing={setIsCheckFollowing}
+          userId_tweet={tweet?.userId_tweet}
+          tweet={tweet}
+          setTweets={setTweets}
+          setTweetParent={setTweetParent}
+          setComments={setComments}
+        />
       </div>
       <div className="tweet-content">{tweet?.content}</div>
 
@@ -83,16 +104,24 @@ const Tweet = ({ tweet }) => {
 
       <div className="tweet-footer">
         <span className="likes" onClick={handleLike}>
-          155k {!like && <FavoriteBorderIcon className="icon-tweet" />}
+          {tweet?.like} {!like && <FavoriteBorderIcon className="icon-tweet" />}
           {like && <FavoriteOutlinedIcon className="text-danger" />}
         </span>
         <span className="retweets">
-          50k <RepeatIcon className="icon-tweet" />
+          0 <RepeatIcon className="icon-tweet" />
         </span>
-        <span className="comment">
+        <span className="comment" onClick={handleCommentClick}>
           50k <MapsUgcOutlinedIcon className="icon-tweet" />
         </span>
       </div>
+      {showCommentForm && (
+        <CommentForm
+          parentId={tweet._id}
+          setComments={setComments}
+          comments={comments}
+          setTweets={setTweets}
+        />
+      )}
     </div>
   );
 };

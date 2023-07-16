@@ -9,6 +9,7 @@ const CreateError = require('http-errors');
 const userRouter = require('../app/routes/userRoute');
 const followRouter = require('../app/routes/followRoute');
 const tweetRouter = require('../app/routes/tweetRoute');
+const commentRouter = require('../app/routes/commentRoute');
 
 //Middelware
 app.use(express.urlencoded());
@@ -31,6 +32,7 @@ app.use('/users', userRouter);
 app.use('/follow', followRouter);
 // app.use('/api/OauthGoogle', googleRouter);
 app.use('/tweets', tweetRouter);
+app.use('/comments', commentRouter);
 
 //handle error
 

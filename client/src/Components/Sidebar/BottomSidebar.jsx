@@ -1,8 +1,16 @@
 import React from "react";
 import "./BottomSidebar.css";
+import { useNavigate } from "react-router-dom";
 
 const BottomSidebar = () => {
   const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("login-user");
+    localStorage.removeItem("accessToken");
+    navigate("/");
+  };
 
   return (
     <div className="bottom-sidebar">
@@ -17,7 +25,12 @@ const BottomSidebar = () => {
           </p>
         </div>
       </div>
-      <button className="btn-logout btn btn-outline-primary">Log out</button>
+      <button
+        className="btn-logout btn btn-outline-primary"
+        onClick={handleLogout}
+      >
+        Log out
+      </button>
     </div>
   );
 };

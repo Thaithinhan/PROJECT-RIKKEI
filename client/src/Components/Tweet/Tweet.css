@@ -4,6 +4,13 @@
   /* display: flex;
   flex-direction: column; */
   border-bottom: 0.5px solid lightgrey;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.tweet:hover {
+  background-color: rgb(239, 239, 239);
+  transition: all 0.25s;
 }
 
 .tweet-header {

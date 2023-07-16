@@ -51,7 +51,7 @@ const ProfileComponent = () => {
   //Lấy bài tweet theo ID
   const getTweetsById = async (id) => {
     const response = await axios.get(`http://localhost:4000/tweets/user/${id}`);
-    console.log(response.data.tweets);
+    // console.log(response.data.tweets);
     setTweets(response.data.tweets);
   };
 
@@ -89,7 +89,9 @@ const ProfileComponent = () => {
 
       {/* HIỂN THỊ THEO TAB KHI ACTIVE */}
       {activeTab === "Tweets" ? (
-        tweets.map((tweet) => <Tweet tweet={tweet} key={tweet._id} />)
+        tweets.map((tweet) => (
+          <Tweet tweet={tweet} key={tweet._id} setTweets={setTweets} />
+        ))
       ) : activeTab === "Follwers" ? (
         <Followers isUpdateFollower={isUpdateFollower} />
       ) : (

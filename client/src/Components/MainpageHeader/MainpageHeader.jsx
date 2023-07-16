@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import axios from "axios";
 const token = JSON.parse(localStorage.getItem("accessToken"));
 
-const MainpageHeader = ({ setIsUpdate }) => {
+const MainpageHeader = ({ isUpdate, setIsUpdate }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const userLogin = JSON.parse(localStorage.getItem("login-user"));
@@ -69,7 +69,7 @@ const MainpageHeader = ({ setIsUpdate }) => {
         })
         .then((response) => {
           console.log(response.data);
-          setIsUpdate();
+          setIsUpdate(!isUpdate);
         })
         .catch((err) => console.log(err));
     } catch (error) {
@@ -116,7 +116,7 @@ const MainpageHeader = ({ setIsUpdate }) => {
               type="file"
               multiple
               id="img-tweet"
-              name="img-tweet"
+              name="images"
               onChange={handleImageSelect}
             />
             <label htmlFor="emoji-tweet" onClick={handleToggleEmojiPicker}>

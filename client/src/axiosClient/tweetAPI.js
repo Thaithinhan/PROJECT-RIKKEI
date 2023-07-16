@@ -7,9 +7,15 @@ export class TweetAPI {
     return axiosClient.get(url);
   }
 
-  // //Tạo Tweet mới
-  // static createTweet(param) {
-  //   const url = "/tweets";
-  //   return axiosClient.post(url, param);
-  // }
+  //Xoá Tweet
+  static deleteTweet(id) {
+    const url = `/tweets/${id}`;
+    return axiosClient.delete(url);
+  }
+
+  //Edit Tweet
+  static editTweet(param) {
+    const url = `/tweets/${param._id}`;
+    return axiosClient.patch(url, param);
+  }
 }

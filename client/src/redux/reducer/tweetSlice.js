@@ -8,6 +8,20 @@ export const getTweetForMe = createAsyncThunk("getTweet/fetch", async () => {
   return res.data;
 });
 
+//Xoá bài đăng của User đang đăng nhập
+export const deleteTweet = createAsyncThunk("deleteTweet/fetch", async (id) => {
+  const res = await TweetAPI.deleteTweet(id);
+  console.log(res.data);
+  return res.data;
+});
+
+//Xoá bài đăng của User đang đăng nhập
+export const editTweet = createAsyncThunk("editTweet/fetch", async (param) => {
+  const res = await TweetAPI.editTweet(param);
+  // console.log(res.data);
+  return res.data;
+});
+
 const TweetSlice = createSlice({
   name: "tweets",
   initialState: [],
@@ -15,6 +29,14 @@ const TweetSlice = createSlice({
   extraReducers: {
     [getTweetForMe.fulfilled]: (state, action) => {
       return (state = action.payload);
+    },
+
+    [deleteTweet.fulfilled]: (state, action) => {
+      return state;
+    },
+
+    [editTweet.fulfilled]: (state, action) => {
+      return state;
     },
   },
 });

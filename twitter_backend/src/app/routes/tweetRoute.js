@@ -9,5 +9,7 @@ router.get('/mytweet', userMiddleware.authMiddleware, tweetController.getTweetFo
 router.get('/getTweetByTime', userMiddleware.authMiddleware, tweetController.getAllTweetByTime);
 router.get('/user/:id', tweetController.getAllTweetByIdUser);
 router.get('/:id', tweetController.getTweetByIdTweet);
+router.delete('/:id', userMiddleware.authMiddleware, tweetController.deleteById);
+router.patch('/:id', userMiddleware.authMiddleware, tweetController.editTweetById);
 
 module.exports = router;

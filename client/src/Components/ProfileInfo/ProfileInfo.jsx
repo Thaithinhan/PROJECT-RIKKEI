@@ -42,7 +42,7 @@ const ProfileInfo = ({ setIsUpdateFollower }) => {
     }
   }, [user]);
 
-  console.log(user?._id);
+  // console.log(user?._id);
 
   //XỬ LÝ FOLLOW
   const handleFollowing = async (user) => {
