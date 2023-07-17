@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Tweet.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
@@ -9,12 +9,27 @@ import DropdownComponent from "../Dropdown/DropdownComponent";
 import { useDispatch } from "react-redux";
 import moment from "moment"; // Import thư viện moment
 import CommentForm from "../CommentForm/CommentForm";
+import {
+  countCommentTweet,
+  likeTweet,
+  unlikeTweet,
+} from "../../redux/reducer/tweetSlice";
 
-const Tweet = ({ tweet, setTweets, setTweetParent, setComments, comments }) => {
-  // const location = useLocation();
-  // const params = useParams();
-  // const id = params?.id;
-  // const dispatch = useDispatch();
+const Tweet = ({
+  tweet,
+  setTweets,
+  setTweetParent,
+  setComments,
+  comments,
+  getTweetsOnNewFeed,
+  getTweetByIdTweet,
+  getMyTweets,
+  getTweetsById,
+}) => {
+  const location = useLocation();
+  const params = useParams();
+  const id = params?.id;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const userLogin = JSON.parse(localStorage.getItem("login-user"));
   const [isCheckFollowing, setIsCheckFollowing] = useState(false);
@@ -35,8 +50,42 @@ const Tweet = ({ tweet, setTweets, setTweetParent, setComments, comments }) => {
 
   //Hiển thị khi like
   const [like, setLike] = useState(false);
-  const handleLike = () => {
-    setLike(!like);
+  useEffect(() => {
+    if (tweet?.likes.findIndex((userId) => userId === userLogin._id) !== -1) {
+      setLike(true);
+    } else {
+      setLike(false);
+    }
+  }, [tweet?.likes, userLogin._id]);
+
+  const handleLike = async (e, idTweet) => {
+    e.stopPropagation();
+    await dispatch(likeTweet(idTweet)).unwrap();
+    if (location.pathname === "/home") {
+      getTweetsOnNewFeed();
+    } else if (location.pathname === `/post-detail/${idTweet}`) {
+      getTweetByIdTweet(idTweet);
+    } else if (location.pathname === `/my-profile`) {
+      getMyTweets();
+    } else if (location.pathname === `/profile/${id}`) {
+      getTweetsById(id);
+    }
+    setLike(true);
+  };
+
+  const handleUnLike = async (e, idTweet) => {
+    e.stopPropagation();
+    await dispatch(unlikeTweet(idTweet)).unwrap();
+    if (location.pathname === "/home") {
+      getTweetsOnNewFeed();
+    } else if (location.pathname === `/post-detail/${idTweet}`) {
+      getTweetByIdTweet(idTweet);
+    } else if (location.pathname === `/my-profile`) {
+      getMyTweets();
+    } else if (location.pathname === `/profile/${id}`) {
+      getTweetsById(id);
+    }
+    setLike(false);
   };
 
   // console.log(showDropdown);
@@ -53,6 +102,17 @@ const Tweet = ({ tweet, setTweets, setTweetParent, setComments, comments }) => {
 
   //Phần comment
   const [showCommentForm, setShowCommentForm] = useState(false);
+  const [commentCount, setCommentCount] = useState(0); //Đếm số comment
+
+  // const getCommentCount = async (idTweet) => {
+  //   const count = await dispatch(countCommentTweet(idTweet)).unwrap();
+  //   setCommentCount(count);
+  // };
+
+  // console.log("paramId ", id);
+  // useEffect(() => {
+  //   getCommentCount(tweet?._id);
+  // }, [tweet]);
 
   const handleCommentClick = (e) => {
     e.stopPropagation();
@@ -103,15 +163,26 @@ const Tweet = ({ tweet, setTweets, setTweetParent, setComments, comments }) => {
       </div>
 
       <div className="tweet-footer">
-        <span className="likes" onClick={handleLike}>
-          {tweet?.like} {!like && <FavoriteBorderIcon className="icon-tweet" />}
-          {like && <FavoriteOutlinedIcon className="text-danger" />}
+        <span className="likes">
+          {tweet?.likes?.length}{" "}
+          {!like && (
+            <FavoriteBorderIcon
+              className="icon-tweet"
+              onClick={(e) => handleLike(e, tweet._id)}
+            />
+          )}
+          {like && (
+            <FavoriteOutlinedIcon
+              className="text-danger"
+              onClick={(e) => handleUnLike(e, tweet._id)}
+            />
+          )}
         </span>
         <span className="retweets">
           0 <RepeatIcon className="icon-tweet" />
         </span>
         <span className="comment" onClick={handleCommentClick}>
-          50k <MapsUgcOutlinedIcon className="icon-tweet" />
+          {commentCount} <MapsUgcOutlinedIcon className="icon-tweet" />
         </span>
       </div>
       {showCommentForm && (
@@ -120,6 +191,8 @@ const Tweet = ({ tweet, setTweets, setTweetParent, setComments, comments }) => {
           setComments={setComments}
           comments={comments}
           setTweets={setTweets}
+          // getCommentCount={getCommentCount}
+          setCommentCount={setCommentCount}
         />
       )}
     </div>

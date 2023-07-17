@@ -36,9 +36,10 @@ const tweetSchema = new mongoose.Schema(
       type: [String],
       default: null,
     },
-    like: {
-      type: Number,
-      default: 0,
+    likes: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'User',
+      default: [],
     },
   },
   {

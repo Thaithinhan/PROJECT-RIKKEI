@@ -18,4 +18,21 @@ export class TweetAPI {
     const url = `/tweets/${param._id}`;
     return axiosClient.patch(url, param);
   }
+
+  //Like Tweet
+  static likeTweet(id) {
+    const url = `/tweets/${id}/like`;
+    return axiosClient.patch(url);
+  }
+  //UnLike Tweet
+  static unlikeTweet(id) {
+    const url = `/tweets/${id}/unlike`;
+    return axiosClient.patch(url);
+  }
+
+  //COUNT COMMENT 
+  static countComment(id) {
+    const url = `/tweets/${id}/countComment`;
+    return axiosClient.get(url);
+  }
 }

@@ -38,7 +38,8 @@ const MainpageComponent = () => {
           key={index}
           tweet={tweet}
           setTweets={setTweets}
-          setComments={ setComments }
+          setComments={setComments}
+          getTweetsOnNewFeed={getTweetsOnNewFeed}
         />
       ))}
     </div>

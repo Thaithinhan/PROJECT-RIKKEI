@@ -23,6 +23,7 @@ const ProfileComponent = () => {
   const [isUpdateFollower, setIsUpdateFollower] = useState(false);
   const userStore = useSelector((state) => state.users);
   const [tweets, setTweets] = useState([]); //set UserState cho mảng Tweet được render ra
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
 
   //Xủ lý Tab đang active
   const handleTabClick = (tab) => {
@@ -65,7 +66,11 @@ const ProfileComponent = () => {
 
   return (
     <div className="profile-content">
-      <ProfileInfo setIsUpdateFollower={handleSetIsUpdate} />
+      <ProfileInfo
+        setIsUpdateFollower={handleSetIsUpdate}
+        setShowEditProfileModal={setShowEditProfileModal}
+        showEditProfileModal={showEditProfileModal}
+      />
       <div className="profile-menu">
         <div
           className={`menu-item ${activeTab === "Tweets" ? "active" : ""}`}
@@ -90,7 +95,13 @@ const ProfileComponent = () => {
       {/* HIỂN THỊ THEO TAB KHI ACTIVE */}
       {activeTab === "Tweets" ? (
         tweets.map((tweet) => (
-          <Tweet tweet={tweet} key={tweet._id} setTweets={setTweets} />
+          <Tweet
+            tweet={tweet}
+            key={tweet._id}
+            setTweets={setTweets}
+            getMyTweets={getMyTweets}
+            getTweetsById={getTweetsById}
+          />
         ))
       ) : activeTab === "Follwers" ? (
         <Followers isUpdateFollower={isUpdateFollower} />

@@ -9,7 +9,14 @@ import {
 } from "../../redux/reducer/commentSlice";
 import { useLocation } from "react-router-dom";
 
-const CommentForm = ({ parentId, setComments, comments, setTweets }) => {
+const CommentForm = ({
+  parentId,
+  setComments,
+  comments,
+  setTweets,
+  setCommentCount,
+  // getCommentCount,
+}) => {
   const [images, setImages] = useState([]);
   const [contentComment, setContentComment] = useState("");
 
@@ -38,8 +45,8 @@ const CommentForm = ({ parentId, setComments, comments, setTweets }) => {
     };
     const data = dispatch(createComment(newComment)).unwrap();
     setContentComment("");
-
-    if (location.pathname === `/post-detail/${parentId}`) {
+    // getCommentCount(parentId);
+    if (location.pathname !== `/home`) {
       setTweets((prevArray) => [...prevArray, data]);
       getCommentOfCurrentTweet(parentId);
     }
@@ -51,9 +58,7 @@ const CommentForm = ({ parentId, setComments, comments, setTweets }) => {
   const getCommentOfCurrentTweet = async (id) => {
     try {
       const data = await dispatch(getCommentByTweetId(id)).unwrap();
-      if (location.pathname === `/post-detail/${parentId}`) {
-        setComments(data);
-      }
+      setComments(data);
     } catch (error) {
       console.log(error);
     }

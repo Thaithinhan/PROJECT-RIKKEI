@@ -2,6 +2,7 @@ const router = require('express').Router();
 const userController = require('../controllers/userControllers');
 const userMiddleware = require('../middlewares/userMiddleware');
 const { validate } = require('../utils/validation');
+const upload = require('../middlewares/multerMiddleware');
 
 //REGISTER ROUTE
 router.post(
@@ -26,6 +27,15 @@ router.get('/suggest-follow', userMiddleware.authMiddleware, userController.sugg
 //GET USER BY ID
 router.get('/:id', userController.getUserById);
 
-
+//EDIT PROFILE
+router.patch(
+  '/profile',
+  userMiddleware.authMiddleware,
+  upload.fields([
+    { name: 'avatar', maxCount: 1 },
+    { name: 'cover_photo', maxCount: 1 },
+  ]),
+  userController.editProfile
+);
 
 module.exports = router;

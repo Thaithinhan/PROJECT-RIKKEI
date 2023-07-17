@@ -22,6 +22,30 @@ export const editTweet = createAsyncThunk("editTweet/fetch", async (param) => {
   return res.data;
 });
 
+//Like bài tweet :
+export const likeTweet = createAsyncThunk("likeTweet/fetch", async (id) => {
+  const res = await TweetAPI.likeTweet(id);
+  // console.log("Like", res.data);
+  return res.data;
+});
+
+//UnLike bài tweet :
+export const unlikeTweet = createAsyncThunk("unlikeTweet/fetch", async (id) => {
+  const res = await TweetAPI.unlikeTweet(id);
+  // console.log("Unlike", res.data);
+  return res.data;
+});
+
+//COunt Comment bài tweet :
+export const countCommentTweet = createAsyncThunk(
+  "countCommentTweet/fetch",
+  async (id) => {
+    const res = await TweetAPI.countComment(id);
+    console.log("commentCount", res.data.commentCount);
+    return res.data.commentCount;
+  }
+);
+
 const TweetSlice = createSlice({
   name: "tweets",
   initialState: [],
@@ -36,6 +60,15 @@ const TweetSlice = createSlice({
     },
 
     [editTweet.fulfilled]: (state, action) => {
+      return state;
+    },
+    [likeTweet.fulfilled]: (state, action) => {
+      return state;
+    },
+    [unlikeTweet.fulfilled]: (state, action) => {
+      return state;
+    },
+    [countCommentTweet.fulfilled]: (state, action) => {
       return state;
     },
   },

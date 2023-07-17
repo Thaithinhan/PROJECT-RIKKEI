@@ -6,7 +6,6 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { editTweet } from "../../../redux/reducer/tweetSlice";
-import { logDOM } from "@testing-library/react";
 import { getCommentByTweetId } from "../../../redux/reducer/commentSlice";
 
 function EditModalTweet({

@@ -3,17 +3,30 @@ const path = require('path');
 
 // Chọn nơi lưu trữ cho các tệp được tải lên
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../../../public'));
+  destination: (req, file, cb) => {
+    cb(null, './public/images');
   },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    const filename = file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname);
-    const fileUrl = `http://localhost:4000/public/${filename}`;
-    cb(null, filename);
-    file.url = fileUrl;
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+  // Kiểm tra kiểu tệp
+  const filetypes = /jpeg|jpg|png|gif/;
+  const mimetype = filetypes.test(file.mimetype);
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    cb('Error: Images Only!'); // thông báo lỗi nếu kiểu tệp không phù hợp
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: { fileSize: 360000 }, // giới hạn kích thước tệp lên tới 1MB
+});
 module.exports = upload;

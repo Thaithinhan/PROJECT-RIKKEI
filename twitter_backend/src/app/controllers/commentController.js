@@ -26,7 +26,7 @@ const createComment = async (req, res) => {
 //LẤY HẾT TẤT CẢ COMMENT CỦA 1 BÀI TWEET
 const getCommentsByTweetId = async (req, res) => {
   const parentId = req.params.parentid;
-  console.log(1111,parentId);
+  // console.log(parentId);
 
   try {
     const comments = await Tweet.find({ parentId, type: 'comment' }).sort('-createdAt').populate('userId_tweet');

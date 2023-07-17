@@ -82,10 +82,10 @@ const MainpageHeader = ({ isUpdate, setIsUpdate }) => {
       <h4 className="fw-bold">Home</h4>
       <div className="tweetbox">
         <form
-          action="#"
           className="form-new-tweet"
           onSubmit={handlePostNewTweet}
           encType="multipart/form-data"
+          method="post"
         >
           <div className="form-group">
             <div className="userAlphabet">

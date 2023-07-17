@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const { default: helmet } = require('helmet');
+// const { default: helmet } = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
@@ -15,14 +15,17 @@ const commentRouter = require('../app/routes/commentRoute');
 app.use(express.urlencoded());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.use(helmet());
+// app.use(helmet());
 const corsOptions = {
   origin: 'http://localhost:3000',
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
-app.use(express.static('public'));
+
+const dirname = path.join(__dirname, '../../public');
+
+app.use(express.static(dirname));
 
 //databasee
 require('../libraries/database/connect.mongo');

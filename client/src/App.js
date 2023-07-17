@@ -9,6 +9,7 @@ import Message from "./Pages/Message/Message";
 import ProfilePage from "./Pages/ProfilePage/MyProfile";
 import PostDetail from "./Pages/PostDetail/PostDetail";
 import MyProfilePage from "./Pages/ProfilePage/MyProfile";
+import VerifyPage from "./Pages/VerifyPage/VerifyPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/my-profile" element={<MyProfilePage />}></Route>
         <Route path="/profile/:id" element={<MyProfilePage />}></Route>
         <Route path="/post-detail/:id" element={<PostDetail />}></Route>
+        <Route path="/verify/:id" element={<VerifyPage />}></Route>
       </Routes>
     </div>
   );

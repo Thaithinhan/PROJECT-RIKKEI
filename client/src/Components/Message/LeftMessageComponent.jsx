@@ -27,7 +27,7 @@ const LeftMessageComponent = () => {
 
       <div className="list-message">
         <div className="tweet-header px-2">
-          <Link to={"/profile-user"} className="tweet-info nav-link">
+          <Link to={"#"} className="tweet-info nav-link">
             <img
               src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/325974944_1890980747908840_7410515548073747029_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=PQou7DxaYS4AX_69UV8&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAkdjCUkiTJ1Ud8FU4ZgQOm7n1DPy0zA_em9ig5VJnzog&oe=64ACFE11"
               alt="Avatar"
@@ -37,7 +37,6 @@ const LeftMessageComponent = () => {
             <span className="username mx-2">@Nhanthai</span>
             <span className="timestamp">03/07/2023</span>
           </Link>
-          <DropdownComponent />
         </div>
         <div className="lastest-message px-2">
           <span>Lorem ipsum dolor sit amet.</span>
@@ -45,7 +44,7 @@ const LeftMessageComponent = () => {
       </div>
       <div className="list-message">
         <div className="tweet-header px-2">
-          <Link to={"/profile-user"} className="tweet-info nav-link">
+          <Link to={"#"} className="tweet-info nav-link">
             <img
               src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/325974944_1890980747908840_7410515548073747029_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=PQou7DxaYS4AX_69UV8&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAkdjCUkiTJ1Ud8FU4ZgQOm7n1DPy0zA_em9ig5VJnzog&oe=64ACFE11"
               alt="Avatar"
@@ -55,7 +54,6 @@ const LeftMessageComponent = () => {
             <span className="username mx-2">@Nhanthai</span>
             <span className="timestamp">03/07/2023</span>
           </Link>
-          <DropdownComponent />
         </div>
         <div className="lastest-message px-2">
           <span>Lorem ipsum dolor sit amet.</span>

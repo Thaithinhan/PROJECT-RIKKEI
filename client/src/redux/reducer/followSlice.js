@@ -45,7 +45,7 @@ export const getFollowingById = createAsyncThunk(
   "get/following",
   async (id) => {
     const response = await FollowAPI.getFollowingById(id);
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   }
 );

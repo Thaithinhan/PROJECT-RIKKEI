@@ -5,9 +5,12 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
+import { LuVerified } from "react-icons/lu";
 import "./TopSidebar.css";
 
 const TopSidebar = () => {
+  const userLogin = JSON.parse(localStorage.getItem("login-user"));
+
   return (
     <div className="top-sidebar">
       <div className="logo-image">
@@ -46,6 +49,12 @@ const TopSidebar = () => {
           <Link to={"/bookmarks"} className="menu ">
             <BookmarksOutlinedIcon className="icon-menu" />{" "}
             <span className="menu-title"> Bookmarks</span>
+          </Link>
+        </li>
+        <li className="menu-item-sidebar">
+          <Link to={`/verify/${userLogin._id}`} className="menu ">
+            <LuVerified className="icon-menu" />{" "}
+            <span className="menu-title">Verify</span>
           </Link>
         </li>
         <li className="menu-item-sidebar">

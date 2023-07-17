@@ -70,6 +70,7 @@ const PostDetailComponent = () => {
           tweet={tweetParent}
           setTweetParent={setTweetParent}
           setTweets={setTweets}
+          getTweetByIdTweet={getTweetByIdTweet}
         />
       </div>
       <div className="list-comments my-4">
@@ -87,6 +88,7 @@ const PostDetailComponent = () => {
                   setComments={setComments}
                   comments={comments}
                   setTweets={setTweets}
+                  getTweetByIdTweet={getTweetByIdTweet}
                 />
                 {subComments[comment._id] &&
                   subComments[comment._id].map((subcomment) => (
@@ -97,6 +99,7 @@ const PostDetailComponent = () => {
                         setComments={setComments}
                         comments={comments}
                         setTweets={setTweets}
+                        getTweetByIdTweet={getTweetByIdTweet}
                       />
                     </div>
                   ))}

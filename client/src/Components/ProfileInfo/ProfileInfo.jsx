@@ -8,8 +8,13 @@ import {
   makeFollowing,
   unFollow,
 } from "../../redux/reducer/followSlice";
+import EditModalProfile from "../Modals/EditProfileModal/EditProfileModal";
 
-const ProfileInfo = ({ setIsUpdateFollower }) => {
+const ProfileInfo = ({
+  setIsUpdateFollower,
+  setShowEditProfileModal,
+  showEditProfileModal,
+}) => {
   const location = useLocation();
   const params = useParams();
   const id = params?.id;
@@ -58,23 +63,31 @@ const ProfileInfo = ({ setIsUpdateFollower }) => {
     setIsUpdateFollower();
   };
 
+  //Xử lý sự kiện mở Modal Edit
+  const handleOpenProfileModal = () => {
+    setShowEditProfileModal(true);
+  };
+
   return (
     <div className="profile-info">
       <div className="user-imgs-info">
         <h4 className="fw-bold p-2">
-          {id ? user?.fullname : userStore?.fullname}
+          {id ? user?.fullname : userLogin?.fullname}
         </h4>
         <div className="cover-img">
           <img
-            src={id ? user?.cover_photo : userStore?.cover_photo}
+            src={id ? user?.cover_photo : userLogin?.cover_photo}
             alt="cover-page"
           />
         </div>
         <div className="avt-img">
-          <img src={id ? user?.avatar : userStore?.avatar} alt="avt-page" />
+          <img src={id ? user?.avatar : userLogin?.avatar} alt="avt-page" />
         </div>
         {location.pathname === "/my-profile" || userLogin?._id === id ? (
-          <button className="btn btn-outline-primary btn-edit-profile">
+          <button
+            className="btn btn-outline-primary btn-edit-profile"
+            onClick={handleOpenProfileModal}
+          >
             Edit Profile
           </button>
         ) : isFollow ? (
@@ -95,12 +108,16 @@ const ProfileInfo = ({ setIsUpdateFollower }) => {
       </div>
       <div className="user-profile-info px-4">
         <h5 className="fullname mt-2">
-          <b>{id ? user?.fullname : userStore?.fullname}</b>
+          <b>{id ? user?.fullname : userLogin?.fullname}</b>
         </h5>
         <p className="username text-secondary">
-          @{id ? user?.username : userStore.username}
+          @{id ? user?.username : userLogin.username}
         </p>
       </div>
+      <EditModalProfile
+        setShowEditProfileModal={setShowEditProfileModal}
+        showEditProfileModal={showEditProfileModal}
+      />
     </div>
   );
 };

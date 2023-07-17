@@ -142,7 +142,7 @@ const suggestFollow = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const userId = req.params.id; // Lấy thông tin người dùng url
-    console.log(222222, userId);
+    // console.log(222222, userId);
     const user = await UserSchema.findById(userId);
 
     if (!user) {
@@ -156,6 +156,41 @@ const getUserById = async (req, res) => {
   }
 };
 
+// EDIT PROFILE :
+const editProfile = async (req, res) => {
+  try {
+    const userId = req.userId; // Lấy thông tin người dùng từ access token
+    console.log(22222222222222, userId);
+    const user = await UserSchema.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Kiểm tra xem trong request có avatar được gửi lên hay không
+    console.log(1111111, req.files);
+
+    if (req.files) {
+      if (req.files['avatar']) {
+        user.avatar = `${req.protocol + '://' + req.get('host')}/images/${req.files['avatar'][0].filename}`; // Trường hợp này giả sử rằng tệp ảnh được lưu trong thư mục /public/images
+      }
+      if (req.files['cover_photo']) {
+        user.cover_photo = `${req.protocol + '://' + req.get('host')}/images/${req.files['cover_photo'][0].filename}`; // Trường hợp này giả sử rằng tệp ảnh được lưu trong thư mục /public/images
+      }
+    }
+
+    // Kiểm tra và cập nhật các trường khác
+    if (req.body.fullname) user.fullname = req.body.fullname;
+    if (req.body.username) user.username = req.body.username;
+
+    const updatedUser = await user.save();
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error('Error updating user profile', error);
+    res.status(500).json({ error: 'Error updating user profile' });
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -163,4 +198,5 @@ module.exports = {
   getMeProfile,
   suggestFollow,
   getUserById,
+  editProfile,
 };
