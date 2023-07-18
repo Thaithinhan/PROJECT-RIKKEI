@@ -12,6 +12,7 @@ import MyProfilePage from "./Pages/ProfilePage/MyProfile";
 import VerifyPage from "./Pages/VerifyPage/VerifyPage";
 import { io } from "socket.io-client";
 import { useEffect } from "react";
+import RequireAuth from "./Components/RequireAuth";
 
 function App() {
   useEffect(() => {
@@ -22,16 +23,39 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Homepage />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/home" element={<MainPage />}></Route>
-        <Route path="/notifications" element={<Notification />}></Route>
-        <Route path="/messages" element={<Message />}></Route>
-        <Route path="/my-profile" element={<MyProfilePage />}></Route>
-        <Route path="/profile/:id" element={<MyProfilePage />}></Route>
-        <Route path="/post-detail/:id" element={<PostDetail />}></Route>
-        <Route path="/verify/:id" element={<VerifyPage />}></Route>
+        <Route path="/register" element={<Register />} />
+
+        <Route path="/login" element={<LoginPage />} />
+
+        <Route path="/" element={<Homepage />} />
+
+        <Route element={<RequireAuth />}>
+          <Route path="/home" element={<MainPage />} />
+        </Route>
+
+        <Route element={<RequireAuth />}>
+          <Route path="/notifications" element={<Notification />} />
+        </Route>
+
+        <Route element={<RequireAuth />}>
+          <Route path="/messages" element={<Message />} />
+        </Route>
+
+        <Route element={<RequireAuth />}>
+          <Route path="/my-profile" element={<MyProfilePage />} />
+        </Route>
+
+        <Route element={<RequireAuth />}>
+          <Route path="/profile/:id" element={<MyProfilePage />} />
+        </Route>
+
+        <Route element={<RequireAuth />}>
+          <Route path="/post-detail/:id" element={<PostDetail />} />
+        </Route>
+
+        <Route element={<RequireAuth />}>
+          <Route path="/verify/:id" element={<VerifyPage />} />
+        </Route>
       </Routes>
     </div>
   );
