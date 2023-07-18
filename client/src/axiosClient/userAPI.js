@@ -44,8 +44,20 @@ export class UserAPI {
   }
 
   //GET FOLLOWING
-  static getFollowing(){
+  static getFollowing() {
     const url = `/users/following`;
     return axiosClient.get(url);
+  }
+
+  //BUY TICK XANH
+  static buyVerification(param) {
+    const url = `/users/verification`;
+    return axiosClient.post(url, param);
+  }
+
+  //check user có tickxanh không
+  static checkVerification(id) {
+    const url = `/users/${id}/checkverify`;
+    return axiosClient.get(url)
   }
 }

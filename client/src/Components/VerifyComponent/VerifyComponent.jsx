@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import "./VerifyComponent.css";
+import { useDispatch } from "react-redux";
+import { buyVerifyUser, checkVerifyUser } from "../../redux/reducer/userSlice";
 
 const VerifyAccount = () => {
   const [amount, setAmount] = useState(100000);
   const [verificationType, setVerificationType] = useState("monthly");
+  const [isVerify, setIsVerify] = useState(false);
+  const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (verificationType === "monthly") {
@@ -15,32 +20,37 @@ const VerifyAccount = () => {
     }
   }, [verificationType]);
 
+  const checkVerificationStatus = async () => {
+    try {
+      const response = await dispatch(checkVerifyUser(userLogin._id));
+      setIsVerify(response.payload?.isVerified);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    checkVerificationStatus();
+  }, []);
+
   const handleSelectChange = (event) => {
     setVerificationType(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const token = JSON.parse(localStorage.getItem("accessToken"));
-    const userLogin = JSON.parse(localStorage.getItem("login-user"));
-
-    // Send a POST request
-    const response = await axios.post(
-      "URL_TO_YOUR_API",
-      {
-        user_id: userLogin.id,
+    try {
+      const newOrder = {
         amount: amount,
-        verification_type: verificationType,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+        verificationType: verificationType,
+      };
 
-    // Handle response here
+      // console.log(newOrder);
+      const response = await dispatch(buyVerifyUser(newOrder)).unwrap();
+      console.log(response);
+      setIsVerify(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -48,23 +58,45 @@ const VerifyAccount = () => {
       <h2>Verify your account</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
+          <Form.Label>Your Name</Form.Label>
+          <Form.Control
+            type="Text"
+            placeholder="Verify your name"
+            // value={amount}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Your Email</Form.Label>
+          <Form.Control
+            type="Text"
+            placeholder="Verify your email address"
+            // value={amount}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
           <Form.Label>Amount to pay</Form.Label>
           <Form.Control
             type="number"
-            placeholder="Nhập số tiền muốn nạp"
             value={amount}
+            name="amount"
             readOnly // Prevent user from changing the amount manually
           />
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Type of verify</Form.Label>
-          <Form.Select onChange={handleSelectChange} value={verificationType}>
+          <Form.Select
+            onChange={handleSelectChange}
+            value={verificationType}
+            name="verificationType"
+          >
             <option value="monthly">Monthly - 100.000VND</option>
             <option value="permanent">Forever - 1.000.000VND</option>
           </Form.Select>
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Verify Confirm
+        <Button variant="primary" type="submit" disabled={isVerify}>
+          {isVerify ? "Already Verified" : "Verify Confirm"}
         </Button>
       </Form>
     </div>

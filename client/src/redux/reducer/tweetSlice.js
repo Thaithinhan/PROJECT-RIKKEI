@@ -41,7 +41,7 @@ export const countCommentTweet = createAsyncThunk(
   "countCommentTweet/fetch",
   async (id) => {
     const res = await TweetAPI.countComment(id);
-    console.log("commentCount", res.data.commentCount);
+    // console.log("commentCount", res.data.commentCount);
     return res.data.commentCount;
   }
 );

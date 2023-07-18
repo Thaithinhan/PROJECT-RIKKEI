@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const tweetController = require('../controllers/tweetController');
 const userMiddleware = require('../middlewares/userMiddleware');
+
 const upload = require('../middlewares/multerMiddleware');
 
 //MAKE NEW TWEET

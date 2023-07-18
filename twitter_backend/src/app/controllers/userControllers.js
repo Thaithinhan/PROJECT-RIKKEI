@@ -1,5 +1,6 @@
 const UserSchema = require('../models/schemas/users.schemas'); //schemas User model
 const FollowingSchema = require('../models/schemas/following.schemas');
+const OrderSchema = require('../models/schemas/order.schemas');
 const bcrypt = require('bcrypt'); //encode password
 const jwt = require('jsonwebtoken');
 const secret_key = require('../../configs/jwt.configs');
@@ -160,7 +161,7 @@ const getUserById = async (req, res) => {
 const editProfile = async (req, res) => {
   try {
     const userId = req.userId; // Lấy thông tin người dùng từ access token
-    console.log(22222222222222, userId);
+    // console.log(22222222222222, userId);
     const user = await UserSchema.findById(userId);
 
     if (!user) {
@@ -168,7 +169,7 @@ const editProfile = async (req, res) => {
     }
 
     // Kiểm tra xem trong request có avatar được gửi lên hay không
-    console.log(1111111, req.files);
+    // console.log(1111111, req.files);
 
     if (req.files) {
       if (req.files['avatar']) {
@@ -191,6 +192,81 @@ const editProfile = async (req, res) => {
   }
 };
 
+//GET FOLLOWING USERS
+const getFollowingUsers = async (req, res) => {
+  try {
+    const currentUserId = req.userId; // Lấy thông tin người dùng từ access token
+
+    const followings = await FollowingSchema.find({ current_userId: currentUserId }).populate('followed_userId');
+
+    if (!followings) {
+      return res.status(404).json({ error: 'No following users found' });
+    }
+
+    res.status(200).json(followings.map((following) => following.followed_userId));
+  } catch (error) {
+    console.error('Error getting following users', error);
+    res.status(500).json({ error: 'Error getting following users' });
+  }
+};
+
+//CHỨC NĂNG MUA TICK XANH
+const buyVerification = async (req, res) => {
+  try {
+    const userId = req.userId;
+    // console.log(1111111111111111, req.body);
+    const { amount, verificationType } = req.body;
+
+    // Giả định thanh toán thành công
+
+    // Tạo đơn hàng mới
+    const order = new OrderSchema({
+      userId: userId,
+      amount: amount,
+      verificationType: verificationType,
+    });
+
+    await order.save();
+
+    // Cập nhật trạng thái xác minh
+    let verificationStatus = 0;
+    if (verificationType === 'monthly') {
+      verificationStatus = 1;
+    } else if (verificationType === 'permanent') {
+      verificationStatus = 2;
+    }
+
+    await UserSchema.findByIdAndUpdate(userId, { verify: verificationStatus });
+
+    res.status(200).send({ message: 'Verification successful' });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const checkVerification = async (req, res) => {
+  try {
+    const userId = req.params.id; // Lấy user ID từ URL
+
+    // Tìm user với userId
+    const user = await UserSchema.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Kiểm tra trường verify của user
+    if (user.verify > 0) {
+      res.status(200).json({ isVerified: true });
+    } else {
+      res.status(200).json({ isVerified: false });
+    }
+  } catch (error) {
+    console.error('Error checking verification status', error);
+    res.status(500).json({ error: 'Error checking verification status' });
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -199,4 +275,7 @@ module.exports = {
   suggestFollow,
   getUserById,
   editProfile,
+  getFollowingUsers,
+  buyVerification,
+  checkVerification,
 };

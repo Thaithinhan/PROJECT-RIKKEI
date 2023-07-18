@@ -4,6 +4,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import MapsUgcOutlinedIcon from "@mui/icons-material/MapsUgcOutlined";
+import { VscVerifiedFilled } from "react-icons/vsc";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import DropdownComponent from "../Dropdown/DropdownComponent";
 import { useDispatch } from "react-redux";
@@ -14,6 +15,9 @@ import {
   likeTweet,
   unlikeTweet,
 } from "../../redux/reducer/tweetSlice";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:4000");
 
 const Tweet = ({
   tweet,
@@ -71,6 +75,13 @@ const Tweet = ({
       getTweetsById(id);
     }
     setLike(true);
+
+    // Gửi sự kiện 'like' tới máy chủ
+    // Ngay sau khi kết nối, gửi sự kiện 'user_connected'
+    socket.on("connect", function () {
+      const userId = userLogin._id; // thay 'yourUserId' bằng ID người dùng thực tế của bạn
+    socket.emit("like", { userId: userId, tweetId: tweet._id });
+    });
   };
 
   const handleUnLike = async (e, idTweet) => {
@@ -104,15 +115,22 @@ const Tweet = ({
   const [showCommentForm, setShowCommentForm] = useState(false);
   const [commentCount, setCommentCount] = useState(0); //Đếm số comment
 
-  // const getCommentCount = async (idTweet) => {
-  //   const count = await dispatch(countCommentTweet(idTweet)).unwrap();
-  //   setCommentCount(count);
-  // };
+  const getCommentCount = async (idTweet) => {
+    const count = await dispatch(countCommentTweet(idTweet)).unwrap();
+    setCommentCount(count);
+  };
 
   // console.log("paramId ", id);
-  // useEffect(() => {
-  //   getCommentCount(tweet?._id);
-  // }, [tweet]);
+  useEffect(() => {
+    if (id) {
+      if (tweet?._id === id) {
+        getCommentCount(id);
+      }
+
+      return;
+    }
+    getCommentCount(tweet?._id);
+  }, [tweet, id]);
 
   const handleCommentClick = (e) => {
     e.stopPropagation();
@@ -136,6 +154,9 @@ const Tweet = ({
           </Link>
           <p className="m-0">
             <span className="fullname">{tweet?.userId_tweet?.fullname}</span>{" "}
+            {tweet?.userId_tweet?.verify > 0 && (
+              <VscVerifiedFilled className="text-primary" />
+            )}
             <p className="username my-0">@{tweet?.userId_tweet?.username}</p>
             <span className="timestamp">
               {formatTimestamp(tweet?.createdAt)}

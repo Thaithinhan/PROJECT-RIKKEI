@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./ProfileInfo.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { getUserById } from "../../redux/reducer/userSlice";
+import { checkVerifyUser, getUserById } from "../../redux/reducer/userSlice";
+import { VscVerifiedFilled } from "react-icons/vsc";
 import {
   checkFollow,
   makeFollowing,
@@ -14,6 +15,8 @@ const ProfileInfo = ({
   setIsUpdateFollower,
   setShowEditProfileModal,
   showEditProfileModal,
+  setIsUpdate,
+  isUpdate,
 }) => {
   const location = useLocation();
   const params = useParams();
@@ -24,11 +27,14 @@ const ProfileInfo = ({
   const [user, setUser] = useState();
   const [isFollow, setIsFollow] = useState(false);
   const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  const [isVerified, setIsVerified] = useState(false);
 
   const fetchUserbyId = async () => {
     const data = await dispatch(getUserById(id)).unwrap();
     setUser(data);
   };
+
+  // console.log(setIsUpdate);
 
   const checkFollowing = async () => {
     const data = await dispatch(checkFollow(user)).unwrap();
@@ -47,7 +53,18 @@ const ProfileInfo = ({
     }
   }, [user]);
 
-  // console.log(user?._id);
+  useEffect(() => {
+    const checkVerificationStatus = async () => {
+      try {
+        const response = await dispatch(checkVerifyUser(userLogin._id));
+        setIsVerified(response.payload.isVerified);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    checkVerificationStatus();
+  }, []);
 
   //XỬ LÝ FOLLOW
   const handleFollowing = async (user) => {
@@ -109,6 +126,7 @@ const ProfileInfo = ({
       <div className="user-profile-info px-4">
         <h5 className="fullname mt-2">
           <b>{id ? user?.fullname : userLogin?.fullname}</b>
+          {isVerified && <VscVerifiedFilled className="text-primary" />}
         </h5>
         <p className="username text-secondary">
           @{id ? user?.username : userLogin.username}
@@ -117,6 +135,8 @@ const ProfileInfo = ({
       <EditModalProfile
         setShowEditProfileModal={setShowEditProfileModal}
         showEditProfileModal={showEditProfileModal}
+        isUpdate={isUpdate}
+        setIsUpdate={setIsUpdate}
       />
     </div>
   );

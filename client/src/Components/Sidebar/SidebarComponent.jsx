@@ -3,11 +3,11 @@ import TopSidebar from "./TopSidebar";
 import BottomSidebar from "./BottomSidebar";
 import "./SidebarComponent.css";
 
-const SidebarComponent = () => {
+const SidebarComponent = ({isUpdate, setIsUpdate}) => {
   return (
     <div className="sidebar">
       <TopSidebar />
-      <BottomSidebar />
+      <BottomSidebar isUpdate={isUpdate} />
     </div>
   );
 };

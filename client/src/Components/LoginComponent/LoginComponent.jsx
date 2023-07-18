@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./LoginComponent.css";
 import { useDispatch } from "react-redux";
@@ -43,6 +43,11 @@ const LoginComponent = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("login-user");
+  }, []);
 
   return (
     <div className="login">

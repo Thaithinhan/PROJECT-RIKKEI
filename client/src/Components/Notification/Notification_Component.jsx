@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Notification.css";
 import { Link } from "react-router-dom";
+import io from "socket.io-client";
+
+// Khởi tạo kết nối đến server
+const socket = io("http://localhost:4000");
 
 const Notification_Component = () => {
   const [activeTab, setActiveTab] = useState("All");
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    socket.on("like", ({ userId, tweetId }) => {
+      console.log(`User ${userId} liked tweet ${tweetId}`);
+
+      // Cập nhật UI để phản ánh sự thay đổi. Điều này phụ thuộc vào thư viện/framework bạn đang sử dụng
+      // Ví dụ, nếu bạn đang sử dụng React, bạn có thể cập nhật trạng thái của một component để phản ánh sự thay đổi này
+    });
+  }, [socket]);
 
   return (
     <div className="notifications-container">

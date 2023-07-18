@@ -8,6 +8,8 @@ import {
   getCommentByTweetId,
 } from "../../redux/reducer/commentSlice";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+const token = JSON.parse(localStorage.getItem("accessToken"));
 
 const CommentForm = ({
   parentId,
@@ -39,16 +41,42 @@ const CommentForm = ({
   //Sự kiện submit form
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const newComment = {
-      content: contentComment,
-      parentId: parentId,
-    };
-    const data = dispatch(createComment(newComment)).unwrap();
+
+    const formData = new FormData();
+    formData.append("parentId", parentId);
+    formData.append("content", contentComment);
+    // Nối Images
+    images.forEach((image, index) => {
+      formData.append("images", image, `image-${index}-${image.name}`); //Tên phải khớp với multer bên server
+    });
+
+    const data = postNewComment(formData);
     setContentComment("");
+
     // getCommentCount(parentId);
     if (location.pathname !== `/home`) {
       setTweets((prevArray) => [...prevArray, data]);
       getCommentOfCurrentTweet(parentId);
+    }
+  };
+
+  //Function post bài twitter tweet từ API
+  const postNewComment = async (tweet) => {
+    try {
+      await axios
+        .post("http://localhost:4000/comments", tweet, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            " Authorization": `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          return response.data;
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error);
     }
   };
 

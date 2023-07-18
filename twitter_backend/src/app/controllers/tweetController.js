@@ -1,5 +1,7 @@
 const Tweet = require('../models/schemas/tweet.schemas');
 const Following = require('../models/schemas/following.schemas');
+const Notification = require('../models/schemas/notification.schemas');
+const notificationController = require('../controllers/notificationController');
 const mongoose = require('mongoose');
 
 const createTweet = async (req, res) => {
@@ -192,6 +194,23 @@ const likeTweet = async (req, res) => {
     if (!updatedTweet) {
       return res.status(404).json({ success: false, message: 'Tweet not found' });
     }
+
+    // Gửi thông báo tới người tạo tweet (chỉ khi người like không phải là chính người tạo tweet)
+    if (userId.toString() !== updatedTweet.userId_tweet._id.toString()) {
+      // Tạo notification
+      const notification = new Notification({
+        sender: userId,
+        receiver: updatedTweet.userId_tweet._id,
+        type: 'like',
+        tweetId: tweetId,
+      });
+      await notification.save();
+
+      // Sử dụng socket.io để gửi thông báo
+      const io = req.app.get('socketio');
+      io.emit('notification', { receiverId: updatedTweet.userId_tweet._id, type: 'like' });
+    }
+
     res.status(200).json({ success: true, message: 'Tweet liked successfully', tweet: updatedTweet });
   } catch (error) {
     console.log(error);

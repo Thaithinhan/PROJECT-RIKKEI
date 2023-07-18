@@ -10,6 +10,8 @@ const userRouter = require('../app/routes/userRoute');
 const followRouter = require('../app/routes/followRoute');
 const tweetRouter = require('../app/routes/tweetRoute');
 const commentRouter = require('../app/routes/commentRoute');
+const chatRoute = require('./routes/chatRoute');
+const notificationRoute = require('./routes/NotificationRoute');
 
 //Middelware
 app.use(express.urlencoded());
@@ -36,6 +38,8 @@ app.use('/follow', followRouter);
 // app.use('/api/OauthGoogle', googleRouter);
 app.use('/tweets', tweetRouter);
 app.use('/comments', commentRouter);
+app.use('/chats-messages', chatRoute);
+app.use('/notifications', notificationRoute);
 
 //handle error
 

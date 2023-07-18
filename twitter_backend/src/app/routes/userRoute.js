@@ -18,6 +18,9 @@ router.post('/login', userController.login);
 //LẤY TẤT CẢ USER TRÊN DATABASE
 router.get('/', userController.getAllUsers);
 
+//LẤY TẤT CẢ USER ĐANG FOLLOW
+router.get('/following', userMiddleware.authMiddleware, userController.getFollowingUsers);
+
 //GET ME PROFILE
 router.get('/me/:id', userMiddleware.authMiddleware, userController.getMeProfile);
 
@@ -37,5 +40,11 @@ router.patch(
   ]),
   userController.editProfile
 );
+
+//CREATE VERIFY AND UPDATE VERIFY TYPE OF USER
+router.post('/verification', userMiddleware.authMiddleware, userController.buyVerification);
+
+//CHECK USER VERIFY OR NOT
+router.get('/:id/checkverify', userController.checkVerification);
 
 module.exports = router;

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { io } from "socket.io-client";
 import HomeIcon from "@mui/icons-material/Home";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
@@ -10,6 +11,32 @@ import "./TopSidebar.css";
 
 const TopSidebar = () => {
   const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  const [notificationsCount, setNotificationsCount] = useState(0);
+
+  useEffect(() => {
+    // Kết nối với server WebSocket
+    const socket = io("http://localhost:4000");
+
+    // Lắng nghe sự kiện 'notification'
+    socket.on("notification", (notification) => {
+      console.log(notification);
+      // Kiểm tra xem thông báo có dành cho người dùng hiện tại hay không
+      if (notification.receiverId === userLogin._id) {
+        // Cập nhật số lượng thông báo
+        setNotificationsCount(notificationsCount + 1);
+      }
+    });
+
+    // Cleanup khi unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, [userLogin._id, notificationsCount]);
+
+  const handleNotificationClick = () => {
+    // Cập nhật số lượng thông báo khi người dùng click vào
+    setNotificationsCount(0);
+  };
 
   return (
     <div className="top-sidebar">
@@ -34,9 +61,16 @@ const TopSidebar = () => {
           </Link>
         </li>
         <li className="menu-item-sidebar">
-          <Link to={"/notifications"} className="menu ">
+          <Link
+            to={"/notifications"}
+            className="menu"
+            onClick={handleNotificationClick}
+          >
             <NotificationsNoneOutlinedIcon className="icon-menu" />{" "}
             <span className="menu-title"> Notifications</span>
+            {notificationsCount > 0 && (
+              <span className="notification-badge">{notificationsCount}</span>
+            )}
           </Link>
         </li>
         <li className="menu-item-sidebar">

@@ -7,8 +7,14 @@ import { useDispatch } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./EditProfileModal.css";
 
-function EditModalProfile({ setShowEditProfileModal, showEditProfileModal }) {
+function EditModalProfile({
+  setShowEditProfileModal,
+  showEditProfileModal,
+  isUpdate,
+  setIsUpdate,
+}) {
   const [show, setShow] = useState(false);
+  // console.log(setIsUpdate);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -80,10 +86,11 @@ function EditModalProfile({ setShowEditProfileModal, showEditProfileModal }) {
       }
     );
     // Handle response here
-    console.log(response);
+
     localStorage.setItem("login-user", JSON.stringify(response.data));
 
     handleClose();
+    setIsUpdate(!isUpdate);
   };
 
   return (

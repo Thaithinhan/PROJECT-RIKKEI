@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { UserAPI } from "../../axiosClient/userAPI";
+
+//Login
 export const login = createAsyncThunk("login/fetch", async (payload) => {
   const res = await UserAPI.login(payload);
   //   console.log(res);
@@ -33,6 +35,30 @@ export const getUserById = createAsyncThunk("getUserbyId", async (id) => {
   return response.data;
 });
 
+//GET LIST USERS FOLLOWING
+export const getUserFollowing = createAsyncThunk("getUserbyId", async () => {
+  const response = await UserAPI.getFollowing();
+  // console.log(response.data);
+
+  return response.data;
+});
+
+//BUY TICK XANH USER
+export const buyVerifyUser = createAsyncThunk("buyVerify", async (param) => {
+  const response = await UserAPI.buyVerification(param);
+  // console.log(response.data);
+
+  return response.data;
+});
+
+//BUY TICK XANH USER
+export const checkVerifyUser = createAsyncThunk("checkVerify", async (id) => {
+  const response = await UserAPI.checkVerification(id);
+  // console.log(response.data);
+
+  return response.data;
+});
+
 const UserSlice = createSlice({
   name: "users",
   initialState: JSON.parse(localStorage.getItem("login-user")) || {},
@@ -53,6 +79,16 @@ const UserSlice = createSlice({
 
     [getUserById.fulfilled]: (state, action) => {
       return state; //Không cần trả về state => vẫn lưu state cũ
+    },
+
+    [getUserFollowing.fulfilled]: (state, action) => {
+      return state; //Không cần trả về state => vẫn lưu state cũ
+    },
+    [buyVerifyUser.fulfilled]: (state, action) => {
+      return state; //
+    },
+    [checkVerifyUser.fulfilled]: (state, action) => {
+      return state; //
     },
   },
 });

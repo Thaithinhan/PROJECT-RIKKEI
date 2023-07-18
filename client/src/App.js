@@ -6,12 +6,20 @@ import LoginPage from "./Pages/LoginPage/LoginPage";
 import MainPage from "./Pages/MainPage/MainPage";
 import Notification from "./Pages/Notification/Notification";
 import Message from "./Pages/Message/Message";
-import ProfilePage from "./Pages/ProfilePage/MyProfile";
+// import ProfilePage from "./Pages/ProfilePage/MyProfile";
 import PostDetail from "./Pages/PostDetail/PostDetail";
 import MyProfilePage from "./Pages/ProfilePage/MyProfile";
 import VerifyPage from "./Pages/VerifyPage/VerifyPage";
+import { io } from "socket.io-client";
+import { useEffect } from "react";
 
 function App() {
+  
+  useEffect(() => {
+    const socket = io("http://localhost:4000");
+    console.log(socket);
+  }, []);
+
   return (
     <div className="App">
       <Routes>

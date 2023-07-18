@@ -12,7 +12,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { getTweetForMe } from "../../redux/reducer/tweetSlice";
 import axios from "axios";
 
-const ProfileComponent = () => {
+const ProfileComponent = ({ isUpdate, setIsUpdate }) => {
   const location = useLocation(); //lấy đường dẫn
   const params = useParams(); //Lấy param id truyền lên nếu có
   const id = params?.id; // lấy ra ID User được truyền lên
@@ -62,7 +62,7 @@ const ProfileComponent = () => {
     } else {
       getTweetsById(id);
     }
-  }, [id]);
+  }, [id, isUpdate]);
 
   return (
     <div className="profile-content">
@@ -70,6 +70,8 @@ const ProfileComponent = () => {
         setIsUpdateFollower={handleSetIsUpdate}
         setShowEditProfileModal={setShowEditProfileModal}
         showEditProfileModal={showEditProfileModal}
+        isUpdate={isUpdate}
+        setIsUpdate={setIsUpdate}
       />
       <div className="profile-menu">
         <div

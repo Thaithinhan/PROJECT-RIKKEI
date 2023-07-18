@@ -1,9 +1,12 @@
 import React from "react";
 import "./BottomSidebar.css";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 
-const BottomSidebar = () => {
+const BottomSidebar = ({ isUpdate }) => {
   const userLogin = JSON.parse(localStorage.getItem("login-user"));
+  const [userCurrent, setUserCurrent] = useState(userLogin);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -12,16 +15,20 @@ const BottomSidebar = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    setUserCurrent(userLogin);
+  }, [isUpdate]);
+
   return (
     <div className="bottom-sidebar">
       <div className="loginUser-info">
         <div className="userAlphabet">
-          <img src={userLogin.avatar} alt="avt" className="avt-user" />
+          <img src={userCurrent?.avatar} alt="avt" className="avt-user" />
         </div>
         <div className="username-content">
-          <b className="emailname_info">{userLogin.fullname}</b>
+          <b className="emailname_info">{userCurrent?.fullname}</b>
           <p className="username-info m-0 text-secondary">
-            @{userLogin.username}
+            @{userCurrent?.username}
           </p>
         </div>
       </div>
