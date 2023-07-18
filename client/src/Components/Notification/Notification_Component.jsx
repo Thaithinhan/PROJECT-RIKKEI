@@ -1,25 +1,44 @@
 import React, { useEffect, useState } from "react";
 import "./Notification.css";
 import { Link } from "react-router-dom";
-import io from "socket.io-client";
+import { useDispatch } from "react-redux";
+import { getNotificationsByUserLogin } from "../../redux/reducer/notificationsSlice";
+import moment from "moment"; // Import thư viện moment
 
-// Khởi tạo kết nối đến server
-const socket = io("http://localhost:4000");
-
-const Notification_Component = () => {
+const Notification_Component = (isUpdateNoti, setIsUpdateNoti) => {
   const [activeTab, setActiveTab] = useState("All");
+  const [notifications, setNotifications] = useState([]);
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+  const dispatch = useDispatch();
+  const userLogin = JSON.parse(localStorage.getItem("login-user"));
+
+  // Hàm hỗ trợ để định dạng thời gian đăng bài post
+  const formatTimestamp = (timestamp) => {
+    // console.log(timestamp);
+    const date = moment(timestamp); // Tạo đối tượng moment từ timestamp
+    const now = moment(); // Đối tượng moment hiện tại
+
+    if (now.diff(date, "days") < 1) {
+      // Nếu chưa đủ 1 ngày
+      return date.fromNow(); // Hiển thị dưới dạng "x phút trước", "vài giây trước",...
+    } else {
+      return date.format("DD/MM/YYYY"); // Hiển thị dưới dạng "ngày/tháng"
+    }
+  };
+
+  const getNotifications = async (userId) => {
+    const response = await dispatch(
+      getNotificationsByUserLogin(userId)
+    ).unwrap();
+    console.log(response);
+    setNotifications(response.notifications);
+  };
 
   useEffect(() => {
-    socket.on("like", ({ userId, tweetId }) => {
-      console.log(`User ${userId} liked tweet ${tweetId}`);
-
-      // Cập nhật UI để phản ánh sự thay đổi. Điều này phụ thuộc vào thư viện/framework bạn đang sử dụng
-      // Ví dụ, nếu bạn đang sử dụng React, bạn có thể cập nhật trạng thái của một component để phản ánh sự thay đổi này
-    });
-  }, [socket]);
+    getNotifications(userLogin._id);
+  }, []);
 
   return (
     <div className="notifications-container">
@@ -44,27 +63,27 @@ const Notification_Component = () => {
           Mention
         </div>
       </div>
-      <div className="notification">
-        <Link to={"/profile-user"} className="avatar">
-          <img
-            src="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/325974944_1890980747908840_7410515548073747029_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=PQou7DxaYS4AX_69UV8&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAkdjCUkiTJ1Ud8FU4ZgQOm7n1DPy0zA_em9ig5VJnzog&oe=64ACFE11"
-            alt="Avatar"
-          />
-        </Link>
-        <div className="notification-content">
-          <Link to={"/profile-user"} className="header nav-link">
-            <span className="fullname">Thái Thị Nhàn</span>{" "}
-            <span className="username">@Nhanthai</span>
-            <span className="date">2023/07/07</span>
+
+      {notifications.map((noti) => (
+        <div className="notification" key={noti._id}>
+          <Link to={`/profile/${noti.sender._id}`} className="avatar">
+            <img src={noti.sender.avatar} alt="Avatar" />
           </Link>
-          <div className="content">
-            Replying to <Link to={"/profile-user"}>@Nhana9093 </Link> <br />
-            <Link to={"/to-tweet"} className="nav-link">
-              for what tweet???
+          <div className="notification-content">
+            <Link to={"/profile-user"} className="header nav-link">
+              <span className="fullname">{noti.sender.fullname}</span>{" "}
+              <span className="username">@ {noti.sender.username}</span>
+              <span className="date">{formatTimestamp(noti.createdAt)}</span>
             </Link>
+            <div className="content">
+              {noti.type}
+              <Link to={`/post-detail/${noti.tweetId}`} className="mx-2">
+                your tweet
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };

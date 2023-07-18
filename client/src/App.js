@@ -14,7 +14,6 @@ import { io } from "socket.io-client";
 import { useEffect } from "react";
 
 function App() {
-  
   useEffect(() => {
     const socket = io("http://localhost:4000");
     console.log(socket);

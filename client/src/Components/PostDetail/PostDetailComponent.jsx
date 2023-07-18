@@ -89,6 +89,7 @@ const PostDetailComponent = () => {
                   comments={comments}
                   setTweets={setTweets}
                   getTweetByIdTweet={getTweetByIdTweet}
+                  getCommentOfCurrentTweet={getCommentOfCurrentTweet}
                 />
                 {subComments[comment._id] &&
                   subComments[comment._id].map((subcomment) => (

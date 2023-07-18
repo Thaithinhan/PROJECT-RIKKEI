@@ -4,6 +4,6 @@ const commentController = require('../controllers/commentController');
 const userMiddleware = require('../middlewares/userMiddleware');
 const upload = require('../middlewares/multerMiddleware');
 
-router.get('/', userMiddleware.authMiddleware, notificationController.getNotifications);
+router.get('/:receiver', userMiddleware.authMiddleware, notificationController.getNotifications);
 
 module.exports = router;

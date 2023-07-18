@@ -29,6 +29,7 @@ const Tweet = ({
   getTweetByIdTweet,
   getMyTweets,
   getTweetsById,
+  getCommentOfCurrentTweet,
 }) => {
   const location = useLocation();
   const params = useParams();
@@ -80,7 +81,7 @@ const Tweet = ({
     // Ngay sau khi kết nối, gửi sự kiện 'user_connected'
     socket.on("connect", function () {
       const userId = userLogin._id; // thay 'yourUserId' bằng ID người dùng thực tế của bạn
-    socket.emit("like", { userId: userId, tweetId: tweet._id });
+      socket.emit("like", { userId: userId, tweetId: tweet._id });
     });
   };
 

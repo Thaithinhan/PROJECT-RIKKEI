@@ -9,7 +9,7 @@ import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import { LuVerified } from "react-icons/lu";
 import "./TopSidebar.css";
 
-const TopSidebar = () => {
+const TopSidebar = ({ isUpdateNoti, setIsUpdateNoti }) => {
   const userLogin = JSON.parse(localStorage.getItem("login-user"));
   const [notificationsCount, setNotificationsCount] = useState(0);
 
@@ -36,6 +36,7 @@ const TopSidebar = () => {
   const handleNotificationClick = () => {
     // Cập nhật số lượng thông báo khi người dùng click vào
     setNotificationsCount(0);
+    // setIsUpdateNoti(!isUpdateNoti);
   };
 
   return (
